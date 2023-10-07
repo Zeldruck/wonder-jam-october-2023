@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9881b8c9f6ad9b478e7ad9f7a83e808, type: 3}
+  m_Name: Boss Data
+  m_EditorClassIdentifier: 
+  _phaseNumbers: 1
+  _bossPhases:
+  - phaseHealth: 100
+    phaseAttacks:
+    - phaseAttack: {fileID: 11400000, guid: 49ea981906cd3994c885af43f52fb320, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: b2be0b5a1c070584d920090087bcd89c, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: eac3b220674a7554fb87823f6e92e46b, type: 2}
+      probability: 1
+    refillingTime: 0

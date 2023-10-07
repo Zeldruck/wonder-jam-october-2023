@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 6029522323434645763}
   - component: {fileID: 6789765532158946639}
   - component: {fileID: 2757722182314198092}
-  - component: {fileID: 3785056570631837487}
+  - component: {fileID: 5695157557497350101}
   - component: {fileID: 1594688939679588424}
   - component: {fileID: 5554619109164299140}
   - component: {fileID: 7863299188958637055}
@@ -367,32 +367,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &3785056570631837487
-CharacterController:
+--- !u!54 &5695157557497350101
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2284808451582906107}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!114 &1594688939679588424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,10 +407,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
-  jumpForce: 7
-  airJumpCount: 1
-  jumpCount: 0
-  jumpCooldownTimer: 0
+  extraSpeedDecrease: 25
+  jumpForce: 10
+  jumpCooldownReset: 0.2
+  groundCheckPosition: {x: 0, y: -0.55, z: 0}
+  groundCheckRadius: 0.48
+  gravityForce: 25
+  dashSpeed: 20
+  dashTime: 0.2
+  dashCooldown: 0.9
+  slideInitialSpeedIncreaseMod: 1
+  slideSpeedDecrease: 0.1
+  slideRotation: 90
+  slideMinSpeed: 1
 --- !u!114 &5554619109164299140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,7 +562,39 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b90dc0a4-1db3-45fe-9ebc-2680758633ba
     m_ActionName: Minigame/ActionWest[/Keyboard/a,/XInputControllerWindows/buttonWest]
-  m_NeverAutoSwitchControlSchemes: 1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5554619109164299140}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ac063c2a-349b-4f74-98ad-0feb057c0023
+    m_ActionName: Player/Dash[/Keyboard/shift,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5554619109164299140}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnSlide
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 514f0619-6261-4754-9d88-7931eb404d04
+    m_ActionName: Player/Slide[/Keyboard/leftCtrl,/XInputControllerWindows/buttonEast]
+  m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
