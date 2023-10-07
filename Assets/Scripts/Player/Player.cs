@@ -24,6 +24,12 @@ public class Player : MonoBehaviour
         playerMovement.SetJumpValue(context.ReadValue<float>() > 0.5f);
     }
 
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0.5f)
+            playerMovement.AttemptDash();
+    }
+
     public void OnLook(InputAction.CallbackContext context)
     {
         playerLook.SetIsStick(context.control.name == "rightStick");

@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &190000105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2284808451582906107, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3722271990336470880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &190000107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5554619109164299140, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3722271990336470880}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190000105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6b8ed83a03b6e48b26bfa1f5df760b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &190000114
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190000105}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &827668137
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,12 +563,71 @@ PrefabInstance:
     - target: {fileID: 3785056570631837487, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
         type: 3}
       propertyPath: m_Radius
-      value: 0.47525108
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785056570631837487, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_MinMoveDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionId
+      value: ac063c2a-349b-4f74-98ad-0feb057c0023
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionName
+      value: Player/Dash[/Keyboard/shift,/XInputControllerWindows/buttonWest]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 190000107}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDash
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Player, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863299188958637055, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2284808451582906107, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 190000114}
   m_SourcePrefab: {fileID: 100100000, guid: 720c447dd6a92ea4c8a6405fbaa2505d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
