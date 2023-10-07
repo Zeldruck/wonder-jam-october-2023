@@ -600,6 +600,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6243598892683793483, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: mouseSensX
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243598892683793483, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: mouseSensY
+      value: 13
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
