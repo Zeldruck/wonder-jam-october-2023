@@ -13,9 +13,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float jumpCooldownReset = 0.2f;
+    [SerializeField] private float gravityForce;
+    [Header("Groundcheck")]
     [SerializeField] private Vector3 groundCheckPosition = new Vector3(0, -0.55f, 0);
     [SerializeField] private float groundCheckRadius = 0.48f;
-    [SerializeField] private float gravityForce;
+    [SerializeField] private LayerMask groundMask;
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.2f;
@@ -42,12 +44,12 @@ public class PlayerMovement : MonoBehaviour
     private int jumpCount;
     private float jumpCooldownTimer;
     private Rigidbody rb;
-    private CapsuleCollider collider;
+    private CapsuleCollider capsCollider;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<CapsuleCollider>();
+        capsCollider = GetComponent<CapsuleCollider>();
     }
     private void FixedUpdate()
     {
@@ -164,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         Collider[] hits;
-        hits = Physics.OverlapSphere(groundCheckPosition + transform.position, groundCheckRadius);
+        hits = Physics.OverlapSphere(groundCheckPosition + transform.position, groundCheckRadius, groundMask);
         foreach (Collider hit in hits)
         {
             if (hit.gameObject != gameObject)
@@ -186,8 +188,8 @@ public class PlayerMovement : MonoBehaviour
     {
         isSliding = true;
         slideCooldownTimer = slideCooldown;
-        collider.center = new Vector3(0, -0.5f, 0);
-        collider.height /= 2;
+        capsCollider.center = new Vector3(0, -0.5f, 0);
+        capsCollider.height /= 2;
         direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
         direction = direction.x * transform.right + direction.z * transform.forward;
         Vector3 desiredVelocity = direction * slideInitialSpeedIncreaseMod * speed;
@@ -218,8 +220,8 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         Camera.main.transform.localPosition = Vector3.zero;
-        collider.center = Vector3.zero;
-        collider.height *= 2;
+        capsCollider.center = Vector3.zero;
+        capsCollider.height *= 2;
     }
 
     private IEnumerator PerformDash()

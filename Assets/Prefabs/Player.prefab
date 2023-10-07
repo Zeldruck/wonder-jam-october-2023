@@ -250,6 +250,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b90dc0a4-1db3-45fe-9ebc-2680758633ba
     m_ActionName: Minigame/ActionWest[/Keyboard/a,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ac063c2a-349b-4f74-98ad-0feb057c0023
+    m_ActionName: Player/Dash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 514f0619-6261-4754-9d88-7931eb404d04
+    m_ActionName: Player/Slide[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -410,14 +418,18 @@ MonoBehaviour:
   extraSpeedDecrease: 25
   jumpForce: 10
   jumpCooldownReset: 0.2
+  gravityForce: 25
   groundCheckPosition: {x: 0, y: -0.55, z: 0}
   groundCheckRadius: 0.48
-  gravityForce: 25
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
   dashSpeed: 10
   dashTime: 0.2
   dashCooldown: 0.9
   slideInitialSpeedIncreaseMod: 1.2
-  slideSpeedDecrease: 3
+  slideCooldown: 1
+  slideSpeedDecrease: 1.5
   slideMinSpeed: 1
   cameraSlideDropTime: 0.2
   cameraSlideOffset: {x: 0, y: -0.5, z: 0}
