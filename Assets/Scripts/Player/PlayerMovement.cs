@@ -13,18 +13,27 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpInput;
     private Vector3 direction;
     private CharacterController charaController;
+    [SerializeField] private int airJumpCount = 1;
+    [SerializeField] private int jumpCount;
+    private float jumpCooldownReset = 0.3f;
+    [SerializeField] private float jumpCooldownTimer;
 
     private void Awake()
     {
         charaController = GetComponent<CharacterController>();
         charaController.detectCollisions = false;
     }
-
-    private void Update()
+    private void FixedUpdate()
     {
         BuildHorizontalMovement();
         BuildVerticalMovement();
         charaController.Move(direction);
+
+    }
+    private void Update()
+    {
+        if (jumpCooldownTimer > 0)
+            jumpCooldownTimer -= Time.deltaTime;
     }
 
     public void SetInputValue(Vector2 input)
@@ -36,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
     public void SetJumpValue(bool input)
     {
         jumpInput = input;
+    }
+
+    public void SetAirJumpCount(int value)
+    {
+        airJumpCount = value;
     }
 
     private void BuildHorizontalMovement()
@@ -59,15 +73,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void BuildVerticalMovement()
     {
-        if (jumpInput)
+        if (jumpInput && jumpCooldownTimer <= 0)
         {
             if (charaController.isGrounded)
             {
-                verticalMovement = jumpForce;
+                PerformJump();
+            }
+            else if (jumpCount > 0)
+            {
+                PerformJump();
+                jumpCount--;
             }
         }
-        else if (charaController.isGrounded)
-            verticalMovement = 0;
+        if (charaController.isGrounded)
+        {
+            //verticalMovement = Physics.gravity.y * 0.1f;
+            jumpCount = airJumpCount;
+        }
 
         if (!charaController.isGrounded)
             verticalMovement += Physics.gravity.y * Time.deltaTime;
@@ -75,5 +97,9 @@ public class PlayerMovement : MonoBehaviour
         direction.y = verticalMovement * Time.deltaTime;
     }
 
-
+    private void PerformJump()
+    {
+        jumpCooldownTimer = jumpCooldownReset;
+        verticalMovement = jumpForce;
+    }
 }
