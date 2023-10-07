@@ -474,8 +474,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594688939679588424, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
         type: 3}
+      propertyPath: slideMinSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1594688939679588424, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
       propertyPath: slideInitialSpeedIncrease
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1594688939679588424, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
+        type: 3}
+      propertyPath: slideInitialSpeedIncreaseMod
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1594688939679588424, guid: 720c447dd6a92ea4c8a6405fbaa2505d,
         type: 3}

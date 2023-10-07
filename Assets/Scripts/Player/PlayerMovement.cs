@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Slide")]
     [SerializeField] private float slideInitialSpeedIncreaseMod = 1f;
     //timer for speed increase? to limit player from spamming sliding just for the speed
-    [SerializeField] private float slideIncrementalSpeedDecrease = 0.1f;
+    [SerializeField] private float slideSpeedDecrease = 0.1f;
     [SerializeField] private float slideRotation = 90f;
     [SerializeField] private float slideMinSpeed = 1f;
     private bool isSliding;
@@ -165,14 +165,13 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = newVelocity;
         while (slideInput && rb.velocity.magnitude > slideMinSpeed)
         {
-            tempSpeed -= slideIncrementalSpeedDecrease * Time.deltaTime;
+            tempSpeed -= slideSpeedDecrease * Time.deltaTime;
             newVelocity = rb.velocity;
             newVelocity.x = moveDirection.x * tempSpeed;
             newVelocity.z = moveDirection.z * tempSpeed;
             rb.velocity = newVelocity;
             yield return null;
         }
-            Debug.Log(slideInput);
         currentRotation = transform.rotation.eulerAngles;
         rotation = Quaternion.Euler(0, currentRotation.y, currentRotation.z);
         transform.rotation = rotation;
