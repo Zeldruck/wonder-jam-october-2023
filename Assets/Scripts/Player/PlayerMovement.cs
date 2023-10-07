@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     public void SetInputValue(Vector2 input)
     {
         movementInput = input;
+
     }
 
     public void SetJumpValue(bool input)
@@ -44,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         if (direction.magnitude >= 0.2f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+
 
             Vector3 moveDirection = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized;
             direction.x = moveDirection.x * speed * Time.deltaTime;
@@ -73,14 +75,5 @@ public class PlayerMovement : MonoBehaviour
         direction.y = verticalMovement * Time.deltaTime;
     }
 
-    #region Inputs
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        SetInputValue(context.ReadValue<Vector2>());
-    }
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        SetJumpValue(context.ReadValue<float>() > 0.5f);
-    }
-    #endregion
+
 }
