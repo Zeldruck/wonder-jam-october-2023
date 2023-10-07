@@ -87,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if (charaController.isGrounded)
         {
-            //verticalMovement = Physics.gravity.y * 0.1f;
             jumpCount = airJumpCount;
         }
 
