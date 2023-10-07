@@ -12,10 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.2f;
-    [SerializeField] private float DASH_COOLDOWN = 0.9f;
-    [SerializeField] private bool isDashing;
-    [SerializeField] private float dashCooldownTimer;
-
+    [SerializeField] private float dashCooldown = 0.9f;
+    private bool isDashing;
+    private float dashCooldownTimer;
     private float verticalMovement;
     private Vector2 movementInput;
     private bool jumpInput;
@@ -121,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator PerformDash()
     {
         isDashing = true;
-        dashCooldownTimer = DASH_COOLDOWN + dashTime;
+        dashCooldownTimer = dashCooldown + dashTime;
         charaController.enabled = false;
         rb.velocity = Vector3.zero;
 
