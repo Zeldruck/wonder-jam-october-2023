@@ -351,7 +351,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2284808451582906107}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 43abe9d0b68624140825fe06fb84a00d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -413,13 +413,14 @@ MonoBehaviour:
   groundCheckPosition: {x: 0, y: -0.55, z: 0}
   groundCheckRadius: 0.48
   gravityForce: 25
-  dashSpeed: 20
+  dashSpeed: 10
   dashTime: 0.2
   dashCooldown: 0.9
-  slideInitialSpeedIncreaseMod: 1
-  slideSpeedDecrease: 0.1
-  slideRotation: 90
+  slideInitialSpeedIncreaseMod: 1.2
+  slideSpeedDecrease: 3
   slideMinSpeed: 1
+  cameraSlideDropTime: 0.2
+  cameraSlideOffset: {x: 0, y: -0.5, z: 0}
 --- !u!114 &5554619109164299140
 MonoBehaviour:
   m_ObjectHideFlags: 0
