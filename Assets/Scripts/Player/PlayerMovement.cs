@@ -23,15 +23,11 @@ public class PlayerMovement : MonoBehaviour
         charaController = GetComponent<CharacterController>();
         charaController.detectCollisions = false;
     }
-    private void FixedUpdate()
+    private void Update()
     {
         BuildHorizontalMovement();
         BuildVerticalMovement();
         charaController.Move(direction);
-
-    }
-    private void Update()
-    {
         if (jumpCooldownTimer > 0)
             jumpCooldownTimer -= Time.deltaTime;
     }
