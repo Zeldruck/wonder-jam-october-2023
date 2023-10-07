@@ -13,6 +13,8 @@ namespace Boss
         public override void Enter()
         {
             base.Enter();
+            
+            _boss.SetInvulnerable(true);
         }
 
         public override void Exit()

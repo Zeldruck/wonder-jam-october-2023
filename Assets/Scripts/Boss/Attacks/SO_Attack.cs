@@ -7,6 +7,7 @@ namespace Boss
     public abstract class SO_Attack : ScriptableObject
     {
         [Header("Basics")]
+        public GameObject prefab;
         public int damage;
         public float cooldown;
         public float waitAfterAttack;

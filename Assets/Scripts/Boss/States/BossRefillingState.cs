@@ -17,6 +17,8 @@ namespace Boss
         public override void Enter()
         {
             base.Enter();
+            
+            _boss.SetInvulnerable(true);
 
             _currentPhase = _boss.CurrentPhase;
 
@@ -27,6 +29,8 @@ namespace Boss
         public override void Exit()
         {
             base.Exit();
+            
+            _boss.SetInvulnerable(false);
         }
 
         public override void Update()
