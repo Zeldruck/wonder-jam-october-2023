@@ -553,7 +553,7 @@ MonoBehaviour:
     m_ActionId: b90dc0a4-1db3-45fe-9ebc-2680758633ba
     m_ActionName: Minigame/ActionWest[/Keyboard/a,/XInputControllerWindows/buttonWest]
   m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: GamepadKeyboardMouse
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
