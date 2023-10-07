@@ -268,10 +268,10 @@ GameObject:
   - component: {fileID: 6789765532158946639}
   - component: {fileID: 2757722182314198092}
   - component: {fileID: 3785056570631837487}
+  - component: {fileID: 5695157557497350101}
   - component: {fileID: 1594688939679588424}
   - component: {fileID: 5554619109164299140}
   - component: {fileID: 7863299188958637055}
-  - component: {fileID: 5695157557497350101}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -394,6 +394,33 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5695157557497350101
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2284808451582906107}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!114 &1594688939679588424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,9 +437,11 @@ MonoBehaviour:
   jumpForce: 7
   dashSpeed: 20
   dashTime: 0.2
-  DASH_COOLDOWN: 0.9
-  isDashing: 0
-  dashCooldownTimer: 0
+  dashCooldown: 0.9
+  slideInitialSpeedIncrease: 1
+  slideIncrementalSpeedDecrease: 0.1
+  slideRotation: 90
+  slideMinSpeed: 1
 --- !u!114 &5554619109164299140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,35 +600,12 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ac063c2a-349b-4f74-98ad-0feb057c0023
     m_ActionName: Player/Dash[/Keyboard/shift,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 514f0619-6261-4754-9d88-7931eb404d04
+    m_ActionName: Player/Slide[/Keyboard/leftCtrl,/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!54 &5695157557497350101
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2284808451582906107}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0

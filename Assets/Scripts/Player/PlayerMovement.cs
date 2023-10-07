@@ -13,6 +13,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.2f;
     [SerializeField] private float dashCooldown = 0.9f;
+    [Header("Slide")]
+    [SerializeField] private float slideInitialSpeedIncreaseMod = 1f;
+    //timer for speed increase? to limit player from spamming sliding just for the speed
+    [SerializeField] private float slideIncrementalSpeedDecrease = 0.1f;
+    [SerializeField] private float slideRotation = 90f;
+    [SerializeField] private float slideMinSpeed = 1f;
+    private bool isSliding;
+    private bool slideInput;
     private bool isDashing;
     private float dashCooldownTimer;
     private float verticalMovement;
@@ -34,10 +42,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (!isDashing)
+        if (!isDashing && !isSliding)
         {
             BuildHorizontalMovement();
             BuildVerticalMovement();
+            FollowCameraRotation();
             charaController.Move(direction);
         }
         if (jumpCooldownTimer > 0)
@@ -65,6 +74,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (dashCooldownTimer <= 0 && movementInput.magnitude >= 0.2f)
             StartCoroutine(PerformDash());
+    }
+
+    public void AttemptSlide()
+    {
+        if (movementInput.magnitude >= 0.2f && charaController.isGrounded)
+            StartCoroutine(PerformSlide());
+    }
+
+    public void SetSlideValue(bool value)
+    {
+        slideInput = value;
     }
 
     private void BuildHorizontalMovement()
@@ -111,10 +131,54 @@ public class PlayerMovement : MonoBehaviour
         direction.y = verticalMovement * Time.deltaTime;
     }
 
+    private void FollowCameraRotation()
+    {
+        Vector3 rotation = Camera.main.transform.rotation.eulerAngles;
+        rotation.x = 0f;
+        transform.rotation = Quaternion.Euler(rotation);
+
+    }
+
     private void PerformJump()
     {
         jumpCooldownTimer = jumpCooldownReset;
         verticalMovement = jumpForce;
+    }
+
+    private IEnumerator PerformSlide()
+    {
+        isSliding = true;
+        charaController.enabled = false;
+        rb.useGravity = true;
+        Vector3 currentRotation = transform.rotation.eulerAngles;
+        Quaternion rotation = Quaternion.Euler(-slideRotation, currentRotation.y, currentRotation.z);
+        transform.rotation = rotation;
+
+        direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+        Vector3 moveDirection = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized;
+
+        float tempSpeed = slideInitialSpeedIncreaseMod * speed;
+        Vector3 newVelocity = Vector3.zero;
+        newVelocity.x = moveDirection.x * tempSpeed;
+        newVelocity.z = moveDirection.z * tempSpeed;
+        rb.velocity = newVelocity;
+        while (slideInput && rb.velocity.magnitude > slideMinSpeed)
+        {
+            tempSpeed -= slideIncrementalSpeedDecrease * Time.deltaTime;
+            newVelocity = rb.velocity;
+            newVelocity.x = moveDirection.x * tempSpeed;
+            newVelocity.z = moveDirection.z * tempSpeed;
+            rb.velocity = newVelocity;
+            yield return null;
+        }
+            Debug.Log(slideInput);
+        currentRotation = transform.rotation.eulerAngles;
+        rotation = Quaternion.Euler(0, currentRotation.y, currentRotation.z);
+        transform.rotation = rotation;
+        charaController.enabled = true;
+        rb.useGravity = false;
+        isSliding = false;
     }
 
     private IEnumerator PerformDash()
