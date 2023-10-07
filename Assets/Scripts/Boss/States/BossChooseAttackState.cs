@@ -7,7 +7,7 @@ namespace Boss
 {
     public class BossChooseAttackState : BossState
     {
-        private int _currentPhase;
+        private int _currentPhase = -1;
         private float[] _attacksProbabilities;
         private BossStateAttack[] _bossStateAttacks;
         

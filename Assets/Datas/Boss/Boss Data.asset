@@ -12,17 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9881b8c9f6ad9b478e7ad9f7a83e808, type: 3}
   m_Name: Boss Data
   m_EditorClassIdentifier: 
-  _phaseNumbers: 4
+  _phaseNumbers: 1
   _bossPhases:
   - phaseHealth: 100
-    phaseAttacks: []
+    phaseAttacks:
+    - phaseAttack: {fileID: 11400000, guid: 49ea981906cd3994c885af43f52fb320, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: b2be0b5a1c070584d920090087bcd89c, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: eac3b220674a7554fb87823f6e92e46b, type: 2}
+      probability: 1
     refillingTime: 0
-  - phaseHealth: 200
-    phaseAttacks: []
-    refillingTime: 15
-  - phaseHealth: 400
-    phaseAttacks: []
-    refillingTime: 10
-  - phaseHealth: 800
-    phaseAttacks: []
-    refillingTime: 5

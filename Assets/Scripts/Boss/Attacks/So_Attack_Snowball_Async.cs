@@ -4,17 +4,19 @@ using UnityEngine;
 
 namespace Boss
 {
-    [CreateAssetMenu(fileName = "Snowfall Attack", menuName = "Boss/Attacks/Snowfall")]
-    public class SO_Attack_Snowfall : SO_Attack
+    [CreateAssetMenu(fileName = "Snowball Attack Async", menuName = "Boss/Attacks/Snowball Async")]
+    public class So_Attack_Snowball_Async : SO_Attack
     {
-        [Header("Snow Fall")]
+        [Header("Snow Ball")]
         public float duration;
         public int zoneNumbers;
         public float zoneScale;
-        public float zoneYScale;
+        public float ySpawnPosition;
         public float minDistanceFromBoss;
         public float maxDistanceFromBoss;
         public float minDistanceBetweenZones;
-        public float zoneLoadTime;
+
+        [Header("Async")]
+        public Vector2 rangeTimeBetweenSpawn;
     }
 }

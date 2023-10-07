@@ -23,13 +23,24 @@ namespace Boss
             }
         }
 
-        public int AddDangerZone(DangerZone.EShape shape, Vector3 position, float size, float loadTime)
+        public void AddDangerZone(DangerZone.EShape shape, Vector3 position, float size, float loadTime)
         {
-            int id = _dangerZones.Count > 0 ? _dangerZones[^1].id : 0;
-            
-            _dangerZones.Add(new DangerZone(id, shape, position, size, loadTime));
+            _dangerZones.Add(new DangerZone(shape, position, size, loadTime));
+        }
 
-            return id;
+        private void Update()
+        {
+            foreach (var dangerZone in _dangerZones)
+            {
+                float newLoadTime = dangerZone.loadTime - Time.deltaTime;
+                
+                dangerZone.ChangeLoadTime(newLoadTime);
+
+                if (dangerZone.IsLoaded)
+                {
+                    _dangerZones.Remove(dangerZone);
+                }
+            }
         }
 
         #region Structs
@@ -37,26 +48,32 @@ namespace Boss
         [Serializable]
         public struct DangerZone
         {
-            private bool loaded;
+            public bool IsLoaded { get; private set; }
             
-            public int id;
             public EShape shape;
             public Vector3 position;
             public float size;
             public float loadTime;
 
-            public DangerZone(int id, EShape shape, Vector3 position, float size, float loadTime)
+            public DangerZone(EShape shape, Vector3 position, float size, float loadTime)
             {
-                this.id = id;
                 this.shape = shape;
                 this.position = position;
                 this.size = size;
                 this.loadTime = loadTime;
                 
-                loaded = false;
+                IsLoaded = false;
             }
 
-            public void SetLoaded() => loaded = true;
+            public void ChangeLoadTime(float newLoadTime)
+            {
+                loadTime = newLoadTime;
+
+                if (loadTime < 0f)
+                {
+                    IsLoaded = true;
+                }
+            }
 
             public enum EShape
             {

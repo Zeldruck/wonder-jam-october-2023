@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30adb4c8ca4117f448bad984f2efd5c4, type: 3}
-  m_Name: Snowfall Attack I
+  m_Script: {fileID: 11500000, guid: ecfe94d48cbb20446ba942283ead9a5f, type: 3}
+  m_Name: Snowball Attack Async
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3369203324723966276, guid: b67a5a4fc8f7dd44d9183a9fb3e49e18, type: 3}
+  prefab: {fileID: 7317177307642760891, guid: b296885115784d64baa6c0fab0ec329a, type: 3}
   damage: 1
   cooldown: 5
   waitAfterAttack: 5
   canUseInARow: 0
   animation: 
-  duration: 5
+  duration: 1
   zoneNumbers: 20
   zoneScale: 5
-  zoneYScale: 5
+  ySpawnPosition: 10
   minDistanceFromBoss: 7.5
   maxDistanceFromBoss: 17.5
   minDistanceBetweenZones: 3
-  zoneLoadTime: 3
+  rangeTimeBetweenSpawn: {x: 0.25, y: 0.75}

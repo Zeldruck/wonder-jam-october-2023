@@ -26,6 +26,8 @@ namespace Boss
         public BossRefillingState RefillingState { get; private set; }
         public BossDieState DieState { get; private set; }
         
+        public BossChooseAttackState ChooseAttackState { get; private set; }
+        
         public List<List<BossStateAttack>> BossPhaseAttackStates { get; private set; }
 
         #endregion
@@ -41,6 +43,8 @@ namespace Boss
             RefillingState = new BossRefillingState(this, StateMachine, "Refilling");
             DieState = new BossDieState(this, StateMachine, "Die");
 
+            ChooseAttackState = new BossChooseAttackState(this, StateMachine, "");
+            
             BossPhaseAttackStates = new List<List<BossStateAttack>>();
             
             for (int i = 0; i < _bossData._bossPhases.Length; i++)
@@ -54,6 +58,14 @@ namespace Boss
                         case SO_Attack_Snowfall snowfall:
                             stateAttacks.Add(new BossSnowFallAttackState(this, StateMachine, snowfall, snowfall.animation));
                             break;
+                        
+                        case SO_Attack_Snowball snowball:
+                            stateAttacks.Add(new BossSnowballAttackState(this, StateMachine, snowball, snowball.animation));
+                            break;
+                        
+                        case So_Attack_Snowball_Async snowballAsync:
+                            stateAttacks.Add(new BossSnowballAsyncAttackState(this, StateMachine, snowballAsync, snowballAsync.animation));
+                            break;
                     }
                 }
                 
@@ -64,7 +76,8 @@ namespace Boss
 
         private void Start()
         {
-            StateMachine.Initialize(IdleState);
+            //StateMachine.Initialize(IdleState);
+            StateMachine.Initialize(ChooseAttackState);
         }
 
         private void Update()
@@ -115,6 +128,13 @@ namespace Boss
                 probs[i] = _bossData._bossPhases[_currentPhase].phaseAttacks[i].probability;
 
             return (BossPhaseAttackStates[_currentPhase].ToArray(), probs);
+        }
+
+        public void DestroyGameObject(GameObject toDestroy) => Destroy(toDestroy);
+        
+        public GameObject InstantiateGameObject(GameObject prefab, Vector3 position, Quaternion rotation)
+        {
+            return Instantiate(prefab, position, rotation);
         }
     }
 
