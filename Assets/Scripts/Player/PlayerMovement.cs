@@ -7,15 +7,22 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [Header("Walk")]
+    [SerializeField] private float speed = 7;
+    [SerializeField] private float extraSpeedDecrease = 3;
+    [Header("Jump")]
     [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpCooldownReset = 0.2f;
+    [SerializeField] private Vector3 groundCheckPosition = new Vector3(0, -0.55f, 0);
+    [SerializeField] private float groundCheckRadius = 0.48f;
+    [SerializeField] private float gravityForce;
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.2f;
     [SerializeField] private float dashCooldown = 0.9f;
     [Header("Slide")]
     [SerializeField] private float slideInitialSpeedIncreaseMod = 1f;
-    //timer for speed increase? to limit player from spamming sliding just for the speed
+    //TODO: timer for speed increase? to limit player from spamming sliding just for the speed
     [SerializeField] private float slideSpeedDecrease = 0.1f;
     [SerializeField] private float slideRotation = 90f;
     [SerializeField] private float slideMinSpeed = 1f;
@@ -23,36 +30,44 @@ public class PlayerMovement : MonoBehaviour
     private bool slideInput;
     private bool isDashing;
     private float dashCooldownTimer;
-    private float verticalMovement;
     private Vector2 movementInput;
     private bool jumpInput;
     private Vector3 direction;
+    private Vector3 inputVelocity;
+    private Vector3 extraVelocity;
     private int airJumpCount = 1;
     private int jumpCount;
-    private float jumpCooldownReset = 0.3f;
     private float jumpCooldownTimer;
-    private CharacterController charaController;
     private Rigidbody rb;
 
     private void Awake()
     {
-        charaController = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
-        charaController.detectCollisions = false;
     }
-    private void Update()
+    private void FixedUpdate()
     {
+        inputVelocity = rb.velocity;
+
         if (!isDashing && !isSliding)
         {
             BuildHorizontalMovement();
             BuildVerticalMovement();
             FollowCameraRotation();
-            charaController.Move(direction);
+            if (IsGrounded())
+            {
+                if (extraVelocity.magnitude > 0.2f)
+                {
+                    float reduction = (1 - extraSpeedDecrease * Time.fixedDeltaTime / extraVelocity.magnitude);
+                    extraVelocity *= reduction;
+                }
+                else extraVelocity = Vector3.zero;
+            }
         }
         if (jumpCooldownTimer > 0)
             jumpCooldownTimer -= Time.deltaTime;
         if (dashCooldownTimer > 0)
             dashCooldownTimer -= Time.deltaTime;
+        rb.velocity = inputVelocity + extraVelocity;
     }
 
     public void SetInputValue(Vector2 input)
@@ -78,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void AttemptSlide()
     {
-        if (movementInput.magnitude >= 0.2f && charaController.isGrounded)
+        if (movementInput.magnitude >= 0.2f && IsGrounded())
             StartCoroutine(PerformSlide());
     }
 
@@ -93,43 +108,42 @@ public class PlayerMovement : MonoBehaviour
 
         if (direction.magnitude >= 0.2f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
-
-
-            Vector3 moveDirection = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized;
-            direction.x = moveDirection.x * speed * Time.deltaTime;
-            direction.z = moveDirection.z * speed * Time.deltaTime;
+            direction = direction.x * transform.right + direction.z * transform.forward;
+            direction *= speed;
         }
         else
         {
             direction = Vector3.zero;
+            inputVelocity.x = 0;
+            inputVelocity.z = 0;
+            extraVelocity.x = 0;
+            extraVelocity.z = 0;
         }
+        inputVelocity.x = direction.x;
+        inputVelocity.z = direction.z;
+
     }
 
     private void BuildVerticalMovement()
     {
         if (jumpInput && jumpCooldownTimer <= 0)
         {
-            if (charaController.isGrounded)
-            {
+            if (IsGrounded())
                 PerformJump();
-            }
             else if (jumpCount > 0)
             {
                 PerformJump();
                 jumpCount--;
             }
         }
-        if (charaController.isGrounded)
-        {
+
+        if (IsGrounded())
             jumpCount = airJumpCount;
-        }
+        else
+            inputVelocity.y -= gravityForce * Time.fixedDeltaTime;
 
-        if (!charaController.isGrounded)
-            verticalMovement += Physics.gravity.y * Time.deltaTime;
-
-        direction.y = verticalMovement * Time.deltaTime;
     }
+
 
     private void FollowCameraRotation()
     {
@@ -139,17 +153,30 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private bool IsGrounded()
+    {
+        Collider[] hits;
+        hits = Physics.OverlapSphere(groundCheckPosition + transform.position, groundCheckRadius);
+        foreach (Collider hit in hits)
+        {
+            if (hit.gameObject != gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     private void PerformJump()
     {
         jumpCooldownTimer = jumpCooldownReset;
-        verticalMovement = jumpForce;
+        inputVelocity.y = jumpForce;
     }
 
     private IEnumerator PerformSlide()
     {
         isSliding = true;
-        charaController.enabled = false;
-        rb.useGravity = true;
         Vector3 currentRotation = transform.rotation.eulerAngles;
         Quaternion rotation = Quaternion.Euler(-slideRotation, currentRotation.y, currentRotation.z);
         transform.rotation = rotation;
@@ -175,8 +202,6 @@ public class PlayerMovement : MonoBehaviour
         currentRotation = transform.rotation.eulerAngles;
         rotation = Quaternion.Euler(0, currentRotation.y, currentRotation.z);
         transform.rotation = rotation;
-        charaController.enabled = true;
-        rb.useGravity = false;
         isSliding = false;
     }
 
@@ -184,20 +209,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isDashing = true;
         dashCooldownTimer = dashCooldown + dashTime;
-        charaController.enabled = false;
-        rb.velocity = Vector3.zero;
 
         direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
-        Vector3 moveDirection = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized;
-
-        Vector3 newVelocity = Vector3.zero;
-        newVelocity.x = moveDirection.x * dashSpeed;
-        newVelocity.z = moveDirection.z * dashSpeed;
-        rb.velocity = newVelocity;
+        direction = direction.x * transform.right + direction.z * transform.forward;
+        extraVelocity = direction * dashSpeed;
 
         yield return new WaitForSeconds(dashTime);
-        charaController.enabled = true;
         isDashing = false;
     }
 }
