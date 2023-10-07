@@ -6,13 +6,22 @@ namespace Boss
 {
     public class BossRefillingState : BossState
     {
-        public BossRefillingState(Boss boss, BossStateMachine stateMachine, SO_Attack attack, string animation) : base(boss, stateMachine, attack, animation)
+        private int _currentPhase;
+        private float _refillingTime;
+        private float _maxHealth;
+        
+        public BossRefillingState(Boss boss, BossStateMachine stateMachine, string animation) : base(boss, stateMachine, animation)
         {
         }
 
         public override void Enter()
         {
             base.Enter();
+
+            _currentPhase = _boss.CurrentPhase;
+
+            _refillingTime = _boss.BossData._bossPhases[_currentPhase].refillingTime;
+            _maxHealth = _boss.BossData._bossPhases[_currentPhase].phaseHealth;
         }
 
         public override void Exit()
@@ -23,6 +32,14 @@ namespace Boss
         public override void Update()
         {
             base.Update();
+
+            _boss.SetHealth(_boss.CurrentHealth + _maxHealth * Time.deltaTime / _refillingTime);
+
+            if (_boss.CurrentHealth >= _maxHealth)
+            {
+                _boss.SetHealth(_maxHealth);
+                // Exit state to roar state, then choose attack state
+            }
         }
     }
 }

@@ -11,5 +11,6 @@ namespace Boss
         public float cooldown;
         public float waitAfterAttack;
         public bool canUseInARow;
+        public string animation;
     }
 }

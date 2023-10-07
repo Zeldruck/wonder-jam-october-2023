@@ -6,7 +6,7 @@ namespace Boss
 {
     public class BossReloadingState : BossState
     {
-        public BossReloadingState(Boss boss, BossStateMachine stateMachine, SO_Attack attack, string animation) : base(boss, stateMachine, attack, animation)
+        public BossReloadingState(Boss boss, BossStateMachine stateMachine, string animation) : base(boss, stateMachine, animation)
         {
         }
 

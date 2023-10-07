@@ -4,10 +4,15 @@ using UnityEngine;
 
 namespace Boss
 {
-    public class BossDieState : BossState
+    public class BossSnowFallAttackState : BossStateAttack
     {
-        public BossDieState(Boss boss, BossStateMachine stateMachine, string animation) : base(boss, stateMachine, animation)
+        public BossSnowFallAttackState(Boss boss, BossStateMachine stateMachine, SO_Attack attack, string animation) : base(boss, stateMachine, attack, animation)
         {
+        }
+
+        public override void Casting()
+        {
+            base.Casting();
         }
 
         public override void Enter()

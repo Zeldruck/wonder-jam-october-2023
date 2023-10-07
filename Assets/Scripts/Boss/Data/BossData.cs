@@ -8,8 +8,8 @@ namespace Boss
     [CreateAssetMenu(fileName = "Boss Data", menuName = "Boss/Boss Data")]
     public class BossData : ScriptableObject
     {
-        [SerializeField] private int _phaseNumbers;
-        [SerializeField] private BossPhase[] _bossPhases;
+        public int _phaseNumbers;
+        public BossPhase[] _bossPhases;
     }
 
     [Serializable]
@@ -17,6 +17,7 @@ namespace Boss
     {
         public float phaseHealth;
         public BossAttackProbability[] phaseAttacks;
+        public float refillingTime;
     }
 
     [Serializable]
