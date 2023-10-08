@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Boss.Boss _boss;
     [SerializeField] private Player _player;
 
+    [SerializeField] private AudioSource _music;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
     {
         _boss.StartBoss();
         _player.StartPlayer();
+        _music.Play();
     }
     
     public void GameWon()
