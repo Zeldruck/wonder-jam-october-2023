@@ -45,6 +45,7 @@ public class MiniGame2Push : MiniGame
 
         timeSteps.Clear();
         difficulty++;
+        difficulty = Mathf.Clamp(difficulty, 1, 6);
 
         OnEndMiniGame?.Invoke(isWon);
     }
