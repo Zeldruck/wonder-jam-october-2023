@@ -54,6 +54,8 @@ public class ScreenSystem : MonoBehaviour
         {
             imageLeftArrow.enabled = false;
             imageRightArrow.enabled = true;
+            buttonAttack.enabled = true;
+            buttonHeal.enabled = false;
         }
         else if (panelChoicesPos == new Vector2(-1920, 0) && !isPowerUpsLock)
         {
@@ -63,6 +65,8 @@ public class ScreenSystem : MonoBehaviour
         {
             imageRightArrow.enabled = false;
             imageLeftArrow.enabled = true;
+            buttonAttack.enabled = false;
+            buttonHeal.enabled = true;
         }
         else
         {
