@@ -12,7 +12,7 @@ public class ScreenSystem : MonoBehaviour
     public Image panelArrow;
     public Image imageLeftArrow;
     public Image imageRightArrow;
-    //public MiniGameSystem miniGameSystem;
+    public MiniGameSystem miniGameSystem;
 
     [Header("------- DEBUG -------")]
     public bool isMiniGameRunning = false;
@@ -78,34 +78,37 @@ public class ScreenSystem : MonoBehaviour
     public void OnClickAttack()
     {
         Debug.Log("Attack");
-        gameObject.SetActive(false);
-        //miniGameSystem.StartShortMiniGame();
-        isMiniGameRunning = true;
+        ChooseShortMiniGame();
     }
 
     public void OnClickHeal()
     {
         Debug.Log("Heal");
-        gameObject.SetActive(false);
-        //miniGameSystem.StartShortMiniGame();
-        isMiniGameRunning = true;
+        ChooseShortMiniGame();
     }
 
     public void OnClickPowerUps()
     {
         Debug.Log("PowerUps");
+        ChooseLongMiniGame();
+    }
+
+    public void ChooseShortMiniGame()
+    {
         gameObject.SetActive(false);
-        //miniGameSystem.StartLongMiniGame();
+        miniGameSystem.StartShortMiniGame();
         isMiniGameRunning = true;
     }
 
-    void DisplayChoices()
+    public void ChooseLongMiniGame()
     {
-
+        gameObject.SetActive(false);
+        miniGameSystem.StartLongMiniGame();
+        isMiniGameRunning = true;
     }
 
-    void DisplayGame()
+    public void DisplayChoices()
     {
-
+        gameObject.SetActive(true);
     }
 }
