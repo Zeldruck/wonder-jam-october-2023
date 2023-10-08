@@ -9,6 +9,11 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private string creditsSceneName;
     [SerializeField] private string returnSceneName;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     public void PlayClicked()
     {
         SceneManager.LoadScene(playSceneName);
