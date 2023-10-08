@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShowPanel",
+                    "type": "Button",
+                    "id": "9838869b-cdd9-497d-883e-06eb63d247d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -247,6 +256,28 @@
                     "processors": "",
                     "groups": "Gamepad;GamepadKeyboardMouse",
                     "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98dd6cb1-b3fd-447b-ae97-5070126a9bf1",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse;GamepadKeyboardMouse",
+                    "action": "ShowPanel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c049c6d3-3f35-4988-9d4e-8a3461546a7a",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;GamepadKeyboardMouse",
+                    "action": "ShowPanel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
