@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class ScreenSystem : MonoBehaviour
 {
+    public Image panelScreen;
+    public Image panelGame; 
     public Image panelChoices;
     public Button buttonAttack;
     public Button buttonHeal;
@@ -10,7 +12,7 @@ public class ScreenSystem : MonoBehaviour
     public Image panelArrow;
     public Image imageLeftArrow;
     public Image imageRightArrow;
-    public MiniGameSystem miniGameSystem;
+    //public MiniGameSystem miniGameSystem;
 
     [Header("------- DEBUG -------")]
     public bool isMiniGameRunning = false;
@@ -76,28 +78,30 @@ public class ScreenSystem : MonoBehaviour
     public void OnClickAttack()
     {
         Debug.Log("Attack");
+        gameObject.SetActive(false);
+        //miniGameSystem.StartShortMiniGame();
+        isMiniGameRunning = true;
     }
 
     public void OnClickHeal()
     {
-        Debug.Log("Heal");  
+        Debug.Log("Heal");
+        gameObject.SetActive(false);
+        //miniGameSystem.StartShortMiniGame();
+        isMiniGameRunning = true;
     }
 
     public void OnClickPowerUps()
     {
         Debug.Log("PowerUps");
+        gameObject.SetActive(false);
+        //miniGameSystem.StartLongMiniGame();
+        isMiniGameRunning = true;
     }
 
     void DisplayChoices()
     {
-        if(isPowerUpsLock)
-        {
-            buttonPowerUps.enabled = false;
-        }
-        else 
-        { 
-            buttonPowerUps.enabled = true; 
-        }
+
     }
 
     void DisplayGame()
