@@ -8,6 +8,7 @@ namespace Boss
     {
         public BossStateMachine StateMachine { get; private set; }
         public Animator Anim { get; private set; }
+        public BossAudio BossAudio { get; private set; }
         
         private int _currentPhase;
         public int CurrentPhase => _currentPhase;
@@ -40,6 +41,7 @@ namespace Boss
         private void Awake()
         {
             Anim = GetComponent<Animator>();
+            BossAudio = GetComponent<BossAudio>();
             
             StateMachine = new BossStateMachine();
 
@@ -102,6 +104,9 @@ namespace Boss
 
         public void ReceiveDamages(float damages)
         {
+            if (_currentHealth > 0f)
+                BossAudio.PlaySound("damage");
+            
             _currentHealth -= damages;
 
             if (_currentHealth <= 0f) return;
@@ -111,6 +116,9 @@ namespace Boss
 
         public void ReceiveHeal(float heal)
         {
+            if (_currentHealth < _bossData._bossPhases[_currentPhase].phaseHealth)
+                BossAudio.PlaySound("heal");
+            
             _currentHealth += heal;
             
             if (_currentHealth < _bossData._bossPhases[_currentPhase].phaseHealth) return;
