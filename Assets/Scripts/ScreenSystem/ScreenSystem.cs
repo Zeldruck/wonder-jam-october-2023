@@ -43,6 +43,8 @@ public class ScreenSystem : MonoBehaviour
         buttonAttack.onClick.AddListener(OnClickAttack);
         buttonHeal.onClick.AddListener(OnClickHeal);
         buttonPowerUps.onClick.AddListener(OnClickPowerUps);
+
+        isDisplay = false;
     }
 
     private void Update()
