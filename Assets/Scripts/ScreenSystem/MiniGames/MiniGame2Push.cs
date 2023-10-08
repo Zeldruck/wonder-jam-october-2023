@@ -123,9 +123,7 @@ public class MiniGame2Push : MiniGame
                 keyboardD.gameObject.SetActive(false);
                 keyboardS.gameObject.SetActive(false);
                 break;
-
         }
-
     }
 
     public override void UpdateGameUI()
@@ -144,7 +142,10 @@ public class MiniGame2Push : MiniGame
 
     public override void UpdateMiniGame()
     {
-        throw new System.NotImplementedException();
+        currentNumberOfPushesLeft--;
+        textPushes.text = currentNumberOfPushesLeft.ToString();
+        if (currentNumberOfPushesLeft <= 0)
+            EndMiniGame(true);
     }
 
     public void OnActionNorth(InputAction.CallbackContext context)
@@ -154,7 +155,7 @@ public class MiniGame2Push : MiniGame
             if (toPush == InputToPush.North)
             {
                 Debug.Log("North Action");
-                UpdateGame();
+                UpdateMiniGame();
             }
         }
     }
@@ -166,7 +167,7 @@ public class MiniGame2Push : MiniGame
             if (toPush == InputToPush.South)
             {
                 Debug.Log("South Action");
-                UpdateGame();
+                UpdateMiniGame();
             }
         }
     } 
@@ -178,7 +179,7 @@ public class MiniGame2Push : MiniGame
             if (toPush == InputToPush.East)
             {
                 Debug.Log("East Action");
-                UpdateGame();
+                UpdateMiniGame();
             }
         }
     }
@@ -190,7 +191,7 @@ public class MiniGame2Push : MiniGame
             if (toPush == InputToPush.West)
             {
                 Debug.Log("West Action");
-                UpdateGame();
+                UpdateMiniGame();
             }
         }
     }
@@ -198,14 +199,6 @@ public class MiniGame2Push : MiniGame
     public override void OnShowPanel(InputAction.CallbackContext context)
     {
         gameUI.gameObject.SetActive(!gameUI.gameObject.activeSelf);
-    }
-
-    public void UpdateGame()
-    {
-        currentNumberOfPushesLeft--;
-        textPushes.text = currentNumberOfPushesLeft.ToString();
-        if (currentNumberOfPushesLeft <= 0)
-            EndMiniGame(true);
     }
 
     public enum InputToPush

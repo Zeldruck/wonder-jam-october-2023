@@ -6,6 +6,8 @@ public class ScreenSystem : MonoBehaviour
 {
     public Player player;
     public Boss.Boss boss;
+    public MiniGameSystem miniGameSystem;
+
     public Image panelScreen;
     public Image panelGame; 
     public Image panelChoices;
@@ -15,9 +17,6 @@ public class ScreenSystem : MonoBehaviour
     public Image panelArrow;
     public Image imageLeftArrow;
     public Image imageRightArrow;
-    public MiniGameSystem miniGameSystem;
-
-    
 
     [Header("------- DEBUG -------")]
     public bool isMiniGameRunning = false;
@@ -119,7 +118,6 @@ public class ScreenSystem : MonoBehaviour
     {
         if(isMiniGameWon)
         {
-            // Do something positive
             switch (miniGameType)
             {
                 case MiniGameType.Attack:
@@ -138,7 +136,6 @@ public class ScreenSystem : MonoBehaviour
         }
         else
         {
-            // do something negative
             switch (miniGameType)
             {
                 case MiniGameType.Attack:
@@ -157,7 +154,6 @@ public class ScreenSystem : MonoBehaviour
 
         isMiniGameRunning = false;
         isMiniGameFinished = true;
-        
     }
 
     public void UnlockPowerUps()

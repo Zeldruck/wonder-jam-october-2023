@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,8 @@ public class MiniGameSystem : MonoBehaviour
     public ScreenSystem screenSystem;
     public List<MiniGame> shortMiniGames = new();
     public List<MiniGame> longMiniGames = new();
+
+    [Header("------- DEBUG -------")]
     public MiniGame currentGame;
 
     private void Awake()
