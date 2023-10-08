@@ -25,11 +25,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Slide")]
     [SerializeField] private float slideInitialSpeedIncreaseMod = 1f;
     [SerializeField] private float slideCooldown = 1f;
-    //TODO: timer for speed increase? to limit player from spamming sliding just for the speed
     [SerializeField] private float slideSpeedDecrease = 0.1f;
     [SerializeField] private float slideMinSpeed = 1f;
     [SerializeField] private float cameraSlideDropTime = 0.4f;
     [SerializeField] private Vector3 cameraSlideOffset = new Vector3(0, -0.5f, 0);
+    private bool canSlide;
+    private bool canDash;
     private bool isSliding;
     private bool slideInput;
     private bool isDashing;
@@ -73,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             jumpCooldownTimer -= Time.deltaTime;
         if (dashCooldownTimer > 0)
             dashCooldownTimer -= Time.deltaTime;
-        if(slideCooldownTimer > 0)
+        if (slideCooldownTimer > 0)
             slideCooldownTimer -= Time.deltaTime;
         rb.velocity = inputVelocity + extraVelocity;
     }
@@ -93,15 +94,25 @@ public class PlayerMovement : MonoBehaviour
         airJumpCount = value;
     }
 
+    public void SetCanSlide(bool value)
+    {
+        canSlide = value;
+    }
+
+    public void SetCanDash(bool value)
+    {
+        canDash = value;
+    }
+
     public void AttemptDash()
     {
-        if (dashCooldownTimer <= 0 && movementInput.magnitude >= 0.2f)
+        if (dashCooldownTimer <= 0 && movementInput.magnitude >= 0.2f && canDash)
             StartCoroutine(PerformDash());
     }
 
     public void AttemptSlide()
     {
-        if (slideCooldownTimer <= 0 && movementInput.magnitude >= 0.2f && IsGrounded())
+        if (slideCooldownTimer <= 0 && movementInput.magnitude >= 0.2f && IsGrounded() && canSlide)
             StartCoroutine(PerformSlide());
     }
 

@@ -424,7 +424,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  dashSpeed: 10
+  dashSpeed: 15
   dashTime: 0.2
   dashCooldown: 0.9
   slideInitialSpeedIncreaseMod: 1.2
@@ -433,6 +433,8 @@ MonoBehaviour:
   slideMinSpeed: 1
   cameraSlideDropTime: 0.2
   cameraSlideOffset: {x: 0, y: -0.5, z: 0}
+  canSlide: 0
+  canDash: 0
 --- !u!114 &5554619109164299140
 MonoBehaviour:
   m_ObjectHideFlags: 0
