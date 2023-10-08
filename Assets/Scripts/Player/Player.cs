@@ -4,17 +4,50 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static System.Collections.Specialized.BitVector32;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private int maxLives = 3;
+    private int currentLives;
     private PlayerMovement playerMovement;
     private PlayerLook playerLook;
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerLook = GetComponentInChildren<PlayerLook>();
+        currentLives = maxLives;
     }
+
+    public void ReduceLife()
+    {
+        currentLives--;
+        //if(currentLives <= 0) //TODO: call game over
+    }
+
+    public void RegenerateLife()
+    {
+        currentLives++;
+        if (currentLives > maxLives)
+            currentLives = maxLives;
+    }
+
+    public int GetCurrentLives() => currentLives;
+
+    public void SetAirJumpCount(int value)
+    {
+        playerMovement.SetAirJumpCount(value);
+    }
+
+    public void SetCanSlide(bool value)
+    {
+        playerMovement.SetCanSlide(value);
+    }
+
+    public void SetCanDash(bool value)
+    {
+        playerMovement.SetCanDash(value);
+    }
+
     #region Inputs
     public void OnMove(InputAction.CallbackContext context)
     {
