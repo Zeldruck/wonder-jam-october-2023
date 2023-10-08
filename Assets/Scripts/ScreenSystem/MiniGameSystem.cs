@@ -47,7 +47,8 @@ public class MiniGameSystem : MonoBehaviour
         currentGame = null;
 
         screenSystem.IsMiniGameWon = isWon;
-        screenSystem.gameObject.SetActive(true);
+        screenSystem.isDisplay = true;
+        screenSystem.panelScreen.gameObject.SetActive(true);
     }
 
     public void Update()

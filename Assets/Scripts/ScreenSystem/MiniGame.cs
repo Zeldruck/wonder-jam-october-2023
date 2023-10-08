@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class MiniGame : MonoBehaviour
 {
@@ -12,4 +13,5 @@ public abstract class MiniGame : MonoBehaviour
     public abstract void EndMiniGame(bool isWon);
     public abstract void UpdateMiniGame();
     public abstract void UpdateGameUI();
+    public abstract void OnShowPanel(InputAction.CallbackContext context);
 }
