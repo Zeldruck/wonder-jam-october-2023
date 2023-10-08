@@ -6,6 +6,7 @@ using TMPro;
 
 public class MiniGame2Push : MiniGame
 {
+    public Canvas gameUI;
     public GameObject prefabTimeStep;
     public GameObject panelTimer;
     public TMP_Text textPushes;
@@ -36,12 +37,14 @@ public class MiniGame2Push : MiniGame
     public int currentNumberOfPushesLeft = 0;
     public int currentTimeSteps = 0;
     public List<GameObject> timeSteps = new();
+    public int difficulty = 1;
 
     public override void EndMiniGame(bool isWon)
     {
         Debug.Log("EndMiniGame2");
 
         timeSteps.Clear();
+        difficulty++;
 
         OnEndMiniGame?.Invoke(isWon);
     }
@@ -65,7 +68,7 @@ public class MiniGame2Push : MiniGame
         }
 
         currentTimeSteps = numberOfStepTime - 1;
-        currentNumberOfPushesLeft = numberOfPushes;
+        currentNumberOfPushesLeft = numberOfPushes * difficulty;
         currentTime = 0f;
         textPushes.text = currentNumberOfPushesLeft.ToString();
 
@@ -190,6 +193,11 @@ public class MiniGame2Push : MiniGame
                 UpdateGame();
             }
         }
+    }
+
+    public override void OnShowPanel(InputAction.CallbackContext context)
+    {
+        gameUI.gameObject.SetActive(!gameUI.gameObject.activeSelf);
     }
 
     public void UpdateGame()
