@@ -23,7 +23,9 @@ public class ScreenSystem : MonoBehaviour
     public bool isMiniGameRunning = false;
     public bool isMiniGameFinished = false;
     public bool isPowerUpsLock = true;
+    public bool isDisplay = false;
     public MiniGameType miniGameType;
+
 
     private bool isMiniGameWon;
     public bool IsMiniGameWon
@@ -165,7 +167,7 @@ public class ScreenSystem : MonoBehaviour
     }
 
     #region Input
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnNavigate(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
         if (!isMiniGameRunning)
@@ -184,6 +186,12 @@ public class ScreenSystem : MonoBehaviour
                 panelChoices.rectTransform.anchoredPosition += new Vector2(-960, 0);
             }
         }
+    }
+
+    public void OnShowPanel(InputAction.CallbackContext context)
+    {
+        isDisplay = !isDisplay;
+        panelScreen.gameObject.SetActive(isDisplay);
     }
     #endregion
 }
