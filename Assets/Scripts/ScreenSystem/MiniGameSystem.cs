@@ -9,6 +9,19 @@ public class MiniGameSystem : MonoBehaviour
     public List<MiniGame> longMiniGames = new();
     public MiniGame currentGame;
 
+    private void Awake()
+    {
+        foreach(MiniGame miniGame in shortMiniGames)
+        {
+            miniGame.gameObject.SetActive(false);
+        }
+
+        foreach(MiniGame miniGame in longMiniGames)
+        {
+            miniGame.gameObject.SetActive(false);
+        }
+    }
+
     public void StartShortMiniGame()
     {
         int random = Random.Range(0, shortMiniGames.Count);
@@ -27,11 +40,19 @@ public class MiniGameSystem : MonoBehaviour
         currentGame.gameObject.SetActive(true);
     }
 
-    private void CurrentGame_OnEndMiniGame()
+    private void CurrentGame_OnEndMiniGame(bool isWon)
     {
         currentGame.OnEndMiniGame -= CurrentGame_OnEndMiniGame;
         currentGame.gameObject.SetActive(false);
         screenSystem.isMiniGameRunning = false;
+        screenSystem.isMiniGameFinished = true;
+        screenSystem.IsMiniGameWon = isWon;
         screenSystem.gameObject.SetActive(true);
+    }
+
+    public void Update()
+    {
+        if(currentGame)
+            currentGame.UpdateGameUI();
     }
 }

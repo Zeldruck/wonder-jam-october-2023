@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class ScreenSystem : MonoBehaviour
 {
+    public Player player;
+    public Boss.Boss boss;
     public Image panelScreen;
     public Image panelGame; 
     public Image panelChoices;
@@ -17,10 +19,20 @@ public class ScreenSystem : MonoBehaviour
     [Header("------- DEBUG -------")]
     public bool isMiniGameRunning = false;
     public bool isMiniGameFinished = false;
-    public bool isMiniGameWon = false;
-    public bool isMiniGameLost = false;
     public bool isMiniGamePaused = false;
     public bool isPowerUpsLock = true;
+    public MiniGameType miniGameType;
+
+    private bool isMiniGameWon;
+    public bool IsMiniGameWon
+    {
+        get { return isMiniGameWon; }
+        set
+        {
+            isMiniGameWon = value;
+            ApplyEffect();
+        }
+    }
 
     private void Awake()
     {
@@ -78,18 +90,21 @@ public class ScreenSystem : MonoBehaviour
     public void OnClickAttack()
     {
         Debug.Log("Attack");
+        miniGameType = MiniGameType.Attack;
         ChooseShortMiniGame();
     }
 
     public void OnClickHeal()
     {
         Debug.Log("Heal");
+        miniGameType = MiniGameType.Heal;
         ChooseShortMiniGame();
     }
 
     public void OnClickPowerUps()
     {
         Debug.Log("PowerUps");
+        miniGameType = MiniGameType.PowerUps;
         ChooseLongMiniGame();
     }
 
@@ -107,8 +122,56 @@ public class ScreenSystem : MonoBehaviour
         isMiniGameRunning = true;
     }
 
-    public void DisplayChoices()
+    public void ApplyEffect()
     {
-        gameObject.SetActive(true);
+        if(isMiniGameWon)
+        {
+            // Do something positive
+            switch (miniGameType)
+            {
+                case MiniGameType.Attack:
+                    Debug.Log("Attack Positive");
+                    boss.ReceiveDamages(1);
+                    break;
+                case MiniGameType.Heal:
+                    Debug.Log("Heal Positive");
+                    player.RegenerateLife();
+                    break;
+                case MiniGameType.PowerUps:
+                    Debug.Log("PowerUps Positive");
+                    // Player unlock power ups
+                    break;
+            }
+        }
+        else
+        {
+            // do something negative
+            switch (miniGameType)
+            {
+                case MiniGameType.Attack:
+                    Debug.Log("Attack Negative");
+                    player.ReduceLife();
+                    break;
+                case MiniGameType.Heal:
+                    Debug.Log("Heal Negative");
+                    boss.ReceiveDamages(-1);
+                    break;
+                case MiniGameType.PowerUps:
+                    Debug.Log("PowerUps Negative");
+                    break;
+            }
+        }
     }
+
+    public void UnlockPowerUps()
+    {
+        isPowerUpsLock = false;
+    }
+}
+
+public enum MiniGameType
+{
+    Attack,
+    Heal,
+    PowerUps
 }
