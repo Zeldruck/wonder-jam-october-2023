@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScreenSystem : MonoBehaviour
 {
-    public GameObject panelChoices;
+    public Image panelChoices;
     public Button buttonAttack;
     public Button buttonHeal;
     public Button buttonPowerUps;
+    public Image panelArrow;
+    public Image imageLeftArrow;
+    public Image imageRightArrow;
     public MiniGameSystem miniGameSystem;
 
-    [Header("---- DEBUG -------")]
+    [Header("------- DEBUG -------")]
     public bool isMiniGameRunning = false;
     public bool isMiniGameFinished = false;
     public bool isMiniGameWon = false;
@@ -26,6 +27,52 @@ public class ScreenSystem : MonoBehaviour
         buttonPowerUps.onClick.AddListener(OnClickPowerUps);
     }
 
+    private void Update()
+    {
+        Vector2 panelChoicesPos = panelChoices.rectTransform.anchoredPosition;
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && panelChoicesPos.x < 0)
+        {
+            panelChoices.rectTransform.anchoredPosition += new Vector2(960, 0);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && panelChoicesPos.x > -1920 && !isPowerUpsLock)
+        {
+            panelChoices.rectTransform.anchoredPosition += new Vector2(-960, 0);
+        }
+        else if(Input.GetKeyDown(KeyCode.RightArrow) && panelChoicesPos.x > -960 && isPowerUpsLock)
+        {
+            panelChoices.rectTransform.anchoredPosition += new Vector2(-960, 0);
+        }
+
+        if (panelChoicesPos == new Vector2(0, 0))
+        {
+            imageLeftArrow.enabled = false;
+            imageRightArrow.enabled = true;
+        }
+        else if(panelChoicesPos == new Vector2(-1920, 0) && !isPowerUpsLock)
+        {
+            imageRightArrow.enabled = false;
+        }
+        else if(panelChoicesPos == new Vector2(-960, 0) && isPowerUpsLock)
+        {
+            imageRightArrow.enabled = false;
+            imageLeftArrow.enabled = true;
+        }
+        else
+        {
+            imageLeftArrow.enabled = true;
+            imageRightArrow.enabled = true;
+        }
+        
+        if(isPowerUpsLock)
+        {
+            buttonPowerUps.gameObject.SetActive(false);
+        }
+        else
+        {
+            buttonPowerUps.gameObject.SetActive(true);
+        }
+    }
+
     public void OnClickAttack()
     {
         Debug.Log("Attack");
@@ -34,7 +81,6 @@ public class ScreenSystem : MonoBehaviour
     public void OnClickHeal()
     {
         Debug.Log("Heal");  
-
     }
 
     public void OnClickPowerUps()
@@ -54,9 +100,6 @@ public class ScreenSystem : MonoBehaviour
         }
     }
 
-    // Render Target
-    // Render One Camera for Each Game
-    //
     void DisplayGame()
     {
 
