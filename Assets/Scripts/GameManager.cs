@@ -7,19 +7,23 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] private Boss.Boss _boss;
+    [SerializeField] private Player _player;
+
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-
-        else if (instance != this)
-        {
+        if (instance != null && instance != this)
             Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
+
+        instance = this;
     }
 
+    public void StartGame()
+    {
+        _boss.StartBoss();
+        _player.StartPlayer();
+    }
+    
     public void GameWon()
     {
         //TODO:do stuff pre-win (victory music, animation, cutscene)

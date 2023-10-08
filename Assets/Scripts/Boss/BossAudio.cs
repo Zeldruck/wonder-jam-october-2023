@@ -51,6 +51,13 @@ namespace Boss
             }
         }
 
+        public void PlayInternalSound(AudioClip audioClip)
+        {
+            if (audioClip == null) return;
+            
+            _audioSourceInternalBoss.PlayOneShot(audioClip);
+        }
+
         public void StopSounds()
         {
             _audioSourceExternalBoss.Stop();

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30adb4c8ca4117f448bad984f2efd5c4, type: 3}
+  m_Name: Snowfall Attack I
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5609969369665210084, guid: fd2afe267edec02478f498a49420d53d, type: 3}
+  damage: 1
+  cooldown: 0
+  waitAfterAttack: 0
+  canUseInARow: 0
+  animation: 
+  attackAudioClip: {fileID: 8300000, guid: c39c34de14b31534e8dd4184c55fb488, type: 3}
+  duration: 6
+  zoneNumbers: 5
+  zoneScale: 5
+  zoneYScale: 5
+  minDistanceFromBoss: 7.5
+  maxDistanceFromBoss: 17.5
+  minDistanceBetweenZones: 0
+  zoneLoadTime: 3

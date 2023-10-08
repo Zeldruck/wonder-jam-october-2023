@@ -33,7 +33,7 @@ namespace Boss
             base.Exit();
             
             _boss.BossAudio.StopSounds();
-            
+            _boss.BossAudio.PlaySound("roar");
             
             _boss.SetInvulnerable(false);
         }
@@ -48,8 +48,7 @@ namespace Boss
             {
                 _boss.SetHealth(_maxHealth);
                 // Exit state to roar state, then choose attack state
-                _boss.BossAudio.PlaySound("roar");
-                _stateMachine.ChangeState(_boss.ChooseAttackState);
+                _stateMachine.ChangeState(_boss.ReloadingState);
             }
         }
     }

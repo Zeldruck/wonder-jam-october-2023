@@ -13,5 +13,6 @@ namespace Boss
         public float waitAfterAttack;
         public bool canUseInARow;
         public string animation;
+        public AudioClip attackAudioClip;
     }
 }
