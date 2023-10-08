@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,10 +14,12 @@ public class Player : MonoBehaviour
         currentLives = maxLives;
     }
 
+    [ContextMenu("lose life")]
     public void ReduceLife()
     {
         currentLives--;
-        //if(currentLives <= 0) //TODO: call game over
+        if (currentLives <= 0) //TODO: call game over
+            GameManager.instance.GameLost();
     }
 
     public void RegenerateLife()
@@ -29,6 +27,12 @@ public class Player : MonoBehaviour
         currentLives++;
         if (currentLives > maxLives)
             currentLives = maxLives;
+    }
+
+    [ContextMenu("win game")]
+    public void DebugWinGame()
+    {
+        GameManager.instance.GameWon();
     }
 
     public int GetCurrentLives() => currentLives;
