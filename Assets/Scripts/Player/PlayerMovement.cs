@@ -57,9 +57,9 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Player>();
 
         hasInputEnabled = false;
-        canSlide = true;
-        canDash = true;
-        SetAirJumpCount(1);
+        canSlide = false;
+        canDash = false;
+        SetAirJumpCount(0);
     }
     
     private void FixedUpdate()
