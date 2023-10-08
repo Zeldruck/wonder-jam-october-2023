@@ -122,7 +122,7 @@ public class ScreenSystem : MonoBehaviour
             {
                 case MiniGameType.Attack:
                     Debug.Log("Attack Positive");
-                    boss.ReceiveDamages(1);
+                    boss.ReceiveDamages(25);
                     break;
                 case MiniGameType.Heal:
                     Debug.Log("Heal Positive");
@@ -144,7 +144,7 @@ public class ScreenSystem : MonoBehaviour
                     break;
                 case MiniGameType.Heal:
                     Debug.Log("Heal Negative");
-                    boss.ReceiveHeal(1);
+                    boss.ReceiveHeal(10);
                     break;
                 case MiniGameType.PowerUps:
                     Debug.Log("PowerUps Negative");
@@ -185,6 +185,12 @@ public class ScreenSystem : MonoBehaviour
 
     public void OnShowPanel(InputAction.CallbackContext context)
     {
+        Cursor.visible = !isDisplay;
+        Cursor.lockState = !isDisplay ? CursorLockMode.Confined : CursorLockMode.Locked;
+        
+        if (!isDisplay) player.StopPlayer();
+        else player.StartPlayer();
+        
         if(!isMiniGameRunning)
         {
             isDisplay = !isDisplay;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MiniGameSystem : MonoBehaviour
 {
@@ -49,7 +50,8 @@ public class MiniGameSystem : MonoBehaviour
 
         screenSystem.IsMiniGameWon = isWon;
         screenSystem.isDisplay = true;
-        screenSystem.panelScreen.gameObject.SetActive(true);
+        screenSystem.OnShowPanel(new InputAction.CallbackContext());
+        /*screenSystem.panelScreen.gameObject.SetActive(true);*/
     }
 
     public void Update()
