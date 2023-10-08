@@ -6,6 +6,8 @@ public class ScreenSystem : MonoBehaviour
 {
     public Player player;
     public Boss.Boss boss;
+    public MiniGameSystem miniGameSystem;
+
     public Image panelScreen;
     public Image panelGame; 
     public Image panelChoices;
@@ -15,9 +17,6 @@ public class ScreenSystem : MonoBehaviour
     public Image panelArrow;
     public Image imageLeftArrow;
     public Image imageRightArrow;
-    public MiniGameSystem miniGameSystem;
-
-    
 
     [Header("------- DEBUG -------")]
     public bool isMiniGameRunning = false;
@@ -43,6 +42,8 @@ public class ScreenSystem : MonoBehaviour
         buttonAttack.onClick.AddListener(OnClickAttack);
         buttonHeal.onClick.AddListener(OnClickHeal);
         buttonPowerUps.onClick.AddListener(OnClickPowerUps);
+
+        isDisplay = false;
     }
 
     private void Update()
@@ -82,7 +83,6 @@ public class ScreenSystem : MonoBehaviour
     {
         Debug.Log("Attack");
         miniGameType = MiniGameType.Attack;
-        isMiniGameRunning = true;
         ChooseShortMiniGame();
     }
 
@@ -90,7 +90,6 @@ public class ScreenSystem : MonoBehaviour
     {
         Debug.Log("Heal");
         miniGameType = MiniGameType.Heal;
-        isMiniGameRunning = true;
         ChooseShortMiniGame();
     }
 
@@ -98,20 +97,19 @@ public class ScreenSystem : MonoBehaviour
     {
         Debug.Log("PowerUps");
         miniGameType = MiniGameType.PowerUps;
-        isMiniGameRunning = true;
         ChooseLongMiniGame();
     }
 
     public void ChooseShortMiniGame()
     {
-        gameObject.SetActive(false);
+        panelScreen.gameObject.SetActive(false);
         miniGameSystem.StartShortMiniGame();
         isMiniGameRunning = true;
     }
 
     public void ChooseLongMiniGame()
     {
-        gameObject.SetActive(false);
+        panelScreen.gameObject.SetActive(false);
         miniGameSystem.StartLongMiniGame();
         isMiniGameRunning = true;
     }
@@ -120,7 +118,6 @@ public class ScreenSystem : MonoBehaviour
     {
         if(isMiniGameWon)
         {
-            // Do something positive
             switch (miniGameType)
             {
                 case MiniGameType.Attack:
@@ -139,7 +136,6 @@ public class ScreenSystem : MonoBehaviour
         }
         else
         {
-            // do something negative
             switch (miniGameType)
             {
                 case MiniGameType.Attack:
@@ -158,7 +154,6 @@ public class ScreenSystem : MonoBehaviour
 
         isMiniGameRunning = false;
         isMiniGameFinished = true;
-        
     }
 
     public void UnlockPowerUps()
@@ -190,8 +185,15 @@ public class ScreenSystem : MonoBehaviour
 
     public void OnShowPanel(InputAction.CallbackContext context)
     {
-        isDisplay = !isDisplay;
-        panelScreen.gameObject.SetActive(isDisplay);
+        if(!isMiniGameRunning)
+        {
+            isDisplay = !isDisplay;
+            panelScreen.gameObject.SetActive(isDisplay);
+        }
+        else
+        {
+            miniGameSystem.currentGame.OnShowPanel(context);
+        }
     }
     #endregion
 }
