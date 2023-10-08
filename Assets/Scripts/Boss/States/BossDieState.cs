@@ -14,6 +14,8 @@ namespace Boss
         {
             base.Enter();
             
+            _boss.BossAudio.PlaySound("die");
+            
             _boss.SetInvulnerable(true);
         }
 

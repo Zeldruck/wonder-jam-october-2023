@@ -28,7 +28,7 @@ namespace Boss
             }
         }
 
-        public BossSnowFallAttackState(Boss boss, BossStateMachine stateMachine, SO_Attack attack, string animation) : base(boss, stateMachine, attack, animation)
+        public BossSnowFallAttackState(Boss boss, BossStateMachine stateMachine, SO_Attack attack, GameObject bossHead, string animation) : base(boss, stateMachine, attack, bossHead, animation)
         {
             attackSnowfall = attack as SO_Attack_Snowfall;
         }
@@ -89,11 +89,7 @@ namespace Boss
             if (durationTimer <= 0f)
             {
                 // Finished
-                //_stateMachine.ChangeState();
-                
-                // DEBUG
-                Debug.Log("Attack Finished");
-                _stateMachine.ChangeState(_boss.ChooseAttackState);
+                _stateMachine.ChangeState(_boss.ReloadingState);
                 return;
             }
 
@@ -110,11 +106,11 @@ namespace Boss
 
                 float newAddY = attackSnowfall.zoneYScale * Time.deltaTime / 2f;
                 
-                Vector3 scale = snowFall.snowfall.transform.localScale;
+                Vector3 scale = snowFall.snowfall.transform.GetChild(0).localScale;
                 scale.y += attackSnowfall.zoneYScale * Time.deltaTime / attackSnowfall.zoneLoadTime;
-                snowFall.snowfall.transform.localScale = scale;
+                snowFall.snowfall.transform.GetChild(0).localScale = scale;
                 
-                snowFall.snowfall.transform.position -= Vector3.up * newAddY / 2f;
+                snowFall.snowfall.transform.GetChild(0).position -= Vector3.up * newAddY / 2f;
 
                 _snowFalls[i] = snowFall;
             }

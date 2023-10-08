@@ -25,7 +25,7 @@ namespace Boss
         private float spawnNextTimer;
         private int spawnCount;
         
-        public BossSnowballAsyncAttackState(Boss boss, BossStateMachine stateMachine, SO_Attack attack, string animation) : base(boss, stateMachine, attack, animation)
+        public BossSnowballAsyncAttackState(Boss boss, BossStateMachine stateMachine, SO_Attack attack, GameObject bossHead, string animation) : base(boss, stateMachine, attack, bossHead, animation)
         {
             attackSnowball = attack as So_Attack_Snowball_Async;
         }
@@ -87,11 +87,8 @@ namespace Boss
             if (spawnCount >= attackSnowball.zoneNumbers && _snowBalls.Count <= 0)
             {
                 // Finished
-                //_stateMachine.ChangeState();
-                
-                // DEBUG
                 Debug.Log("Attack Finished");
-                _stateMachine.ChangeState(_boss.ChooseAttackState);
+                _stateMachine.ChangeState(_boss.ReloadingState);
                 return;
             }
             
