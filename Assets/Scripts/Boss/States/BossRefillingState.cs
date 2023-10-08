@@ -19,6 +19,8 @@ namespace Boss
             base.Enter();
             
             _boss.SetInvulnerable(true);
+            
+            _boss.BossAudio.PlaySound("refilling");
 
             _currentPhase = _boss.CurrentPhase;
 
@@ -29,6 +31,9 @@ namespace Boss
         public override void Exit()
         {
             base.Exit();
+            
+            _boss.BossAudio.StopSounds();
+            
             
             _boss.SetInvulnerable(false);
         }
@@ -43,6 +48,8 @@ namespace Boss
             {
                 _boss.SetHealth(_maxHealth);
                 // Exit state to roar state, then choose attack state
+                _boss.BossAudio.PlaySound("roar");
+                _stateMachine.ChangeState(_boss.ChooseAttackState);
             }
         }
     }
