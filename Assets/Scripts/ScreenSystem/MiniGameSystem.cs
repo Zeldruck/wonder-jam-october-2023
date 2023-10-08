@@ -44,8 +44,8 @@ public class MiniGameSystem : MonoBehaviour
     {
         currentGame.OnEndMiniGame -= CurrentGame_OnEndMiniGame;
         currentGame.gameObject.SetActive(false);
-        screenSystem.isMiniGameRunning = false;
-        screenSystem.isMiniGameFinished = true;
+        currentGame = null;
+
         screenSystem.IsMiniGameWon = isWon;
         screenSystem.gameObject.SetActive(true);
     }

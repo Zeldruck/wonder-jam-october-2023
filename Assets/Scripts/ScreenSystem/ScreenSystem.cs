@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ScreenSystem : MonoBehaviour
@@ -16,10 +17,11 @@ public class ScreenSystem : MonoBehaviour
     public Image imageRightArrow;
     public MiniGameSystem miniGameSystem;
 
+    
+
     [Header("------- DEBUG -------")]
     public bool isMiniGameRunning = false;
     public bool isMiniGameFinished = false;
-    public bool isMiniGamePaused = false;
     public bool isPowerUpsLock = true;
     public MiniGameType miniGameType;
 
@@ -44,29 +46,17 @@ public class ScreenSystem : MonoBehaviour
     private void Update()
     {
         Vector2 panelChoicesPos = panelChoices.rectTransform.anchoredPosition;
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && panelChoicesPos.x < 0)
-        {
-            panelChoices.rectTransform.anchoredPosition += new Vector2(960, 0);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && panelChoicesPos.x > -1920 && !isPowerUpsLock)
-        {
-            panelChoices.rectTransform.anchoredPosition += new Vector2(-960, 0);
-        }
-        else if(Input.GetKeyDown(KeyCode.RightArrow) && panelChoicesPos.x > -960 && isPowerUpsLock)
-        {
-            panelChoices.rectTransform.anchoredPosition += new Vector2(-960, 0);
-        }
 
-        if (panelChoicesPos == new Vector2(0, 0))
+        if (panelChoicesPos == Vector2.zero)
         {
             imageLeftArrow.enabled = false;
             imageRightArrow.enabled = true;
         }
-        else if(panelChoicesPos == new Vector2(-1920, 0) && !isPowerUpsLock)
+        else if (panelChoicesPos == new Vector2(-1920, 0) && !isPowerUpsLock)
         {
             imageRightArrow.enabled = false;
         }
-        else if(panelChoicesPos == new Vector2(-960, 0) && isPowerUpsLock)
+        else if (panelChoicesPos == new Vector2(-960, 0) && isPowerUpsLock)
         {
             imageRightArrow.enabled = false;
             imageLeftArrow.enabled = true;
@@ -76,8 +66,8 @@ public class ScreenSystem : MonoBehaviour
             imageLeftArrow.enabled = true;
             imageRightArrow.enabled = true;
         }
-        
-        if(isPowerUpsLock)
+
+        if (isPowerUpsLock)
         {
             buttonPowerUps.gameObject.SetActive(false);
         }
@@ -86,11 +76,11 @@ public class ScreenSystem : MonoBehaviour
             buttonPowerUps.gameObject.SetActive(true);
         }
     }
-
     public void OnClickAttack()
     {
         Debug.Log("Attack");
         miniGameType = MiniGameType.Attack;
+        isMiniGameRunning = true;
         ChooseShortMiniGame();
     }
 
@@ -98,6 +88,7 @@ public class ScreenSystem : MonoBehaviour
     {
         Debug.Log("Heal");
         miniGameType = MiniGameType.Heal;
+        isMiniGameRunning = true;
         ChooseShortMiniGame();
     }
 
@@ -105,6 +96,7 @@ public class ScreenSystem : MonoBehaviour
     {
         Debug.Log("PowerUps");
         miniGameType = MiniGameType.PowerUps;
+        isMiniGameRunning = true;
         ChooseLongMiniGame();
     }
 
@@ -154,19 +146,46 @@ public class ScreenSystem : MonoBehaviour
                     break;
                 case MiniGameType.Heal:
                     Debug.Log("Heal Negative");
-                    boss.ReceiveDamages(-1);
+                    boss.ReceiveHeal(1);
                     break;
                 case MiniGameType.PowerUps:
                     Debug.Log("PowerUps Negative");
                     break;
             }
         }
+
+        isMiniGameRunning = false;
+        isMiniGameFinished = true;
+        
     }
 
     public void UnlockPowerUps()
     {
         isPowerUpsLock = false;
     }
+
+    #region Input
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        Vector2 value = context.ReadValue<Vector2>();
+        if (!isMiniGameRunning)
+        {
+            Vector2 panelChoicesPos = panelChoices.rectTransform.anchoredPosition;
+            if (value == Vector2.left && panelChoicesPos.x < 0)
+            {
+                panelChoices.rectTransform.anchoredPosition += new Vector2(960, 0);
+            }
+            else if (value == Vector2.right && panelChoicesPos.x > -1920 && !isPowerUpsLock)
+            {
+                panelChoices.rectTransform.anchoredPosition += new Vector2(-960, 0);
+            }
+            else if (value == Vector2.right && panelChoicesPos.x > -960 && isPowerUpsLock)
+            {
+                panelChoices.rectTransform.anchoredPosition += new Vector2(-960, 0);
+            }
+        }
+    }
+    #endregion
 }
 
 public enum MiniGameType

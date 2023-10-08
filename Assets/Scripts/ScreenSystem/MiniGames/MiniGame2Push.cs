@@ -32,6 +32,9 @@ public class MiniGame2Push : MiniGame
         Debug.Log("EndMiniGame2");
         pushAction.Disable();
         pushAction.performed -= PushAction_performed;
+
+        timeSteps.Clear();
+
         OnEndMiniGame?.Invoke(isWon);
     }
 
@@ -57,6 +60,8 @@ public class MiniGame2Push : MiniGame
 
         currentTimeSteps = numberOfStepTime - 1;
         currentNumberOfPushesLeft = numberOfPushes;
+        currentTime = 0f;
+        textPushes.text = currentNumberOfPushesLeft.ToString();
     }
 
     public override void UpdateGameUI()
