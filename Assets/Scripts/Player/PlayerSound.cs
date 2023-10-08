@@ -8,12 +8,13 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] List<AudioClip> footstepClips;
     [SerializeField] AudioClip jumpClip;
     [SerializeField] AudioClip dashClip;
-    [SerializeField] AudioClip SlideClip;
+    [SerializeField] AudioClip slideClip;
     [SerializeField] AudioClip HurtClip;
     [SerializeField] AudioClip DeathClip;
     private AudioSource audioSource;
     private float footstepTimer;
     private bool isPlayingFootsteps = false;
+    private bool isPlaying;
 
     private void Awake()
     {
@@ -54,4 +55,46 @@ public class PlayerSound : MonoBehaviour
     {
         audioSource.PlayOneShot(jumpClip);
     }
+    public void PlayDash()
+    {
+        audioSource.PlayOneShot(dashClip);
+    }
+    public void PlaySlide()
+    {
+        float startTime = Random.Range(0, slideClip.length);
+        audioSource.clip = slideClip;
+        audioSource.Play();
+        audioSource.time = startTime;
+        audioSource.loop = true;
+        isPlaying = true;
+    }
+    /// <summary>
+    /// only works if it is a loop clip
+    /// </summary>
+    public void Resume()
+    {
+        if (!isPlaying)
+        {
+            audioSource.Play();
+            isPlaying = true;
+        }
+    }
+
+    public void Pause()
+    {
+        if (isPlaying)
+        {
+            isPlaying = false;
+            audioSource.Pause();
+        }
+    }
+
+    public void StopSlide()
+    {
+        audioSource.Stop();
+        audioSource.clip = null;
+        audioSource.loop = false;
+        isPlaying = false;
+    }
+
 }

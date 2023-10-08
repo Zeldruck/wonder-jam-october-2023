@@ -29,8 +29,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float slideMinSpeed = 1f;
     [SerializeField] private float cameraSlideDropTime = 0.4f;
     [SerializeField] private Vector3 cameraSlideOffset = new Vector3(0, -0.5f, 0);
-    private bool canSlide;
-    private bool canDash;
+    [SerializeField] private bool canSlide; //TODO: remove serialize field
+    [SerializeField] private bool canDash; //TODO: remove serialize field
     private bool isSliding;
     private bool slideInput;
     private bool isDashing;
@@ -78,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
             else
                 player.PlayerSound.StopFootsteps();
         }
+        else
+            player.PlayerSound.StopFootsteps();
         if (jumpCooldownTimer > 0)
             jumpCooldownTimer -= Time.deltaTime;
         if (dashCooldownTimer > 0)
@@ -207,6 +209,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator PerformSlide()
     {
         isSliding = true;
+        player.PlayerSound.PlaySlide();
         slideCooldownTimer = slideCooldown;
         capsCollider.center = new Vector3(0, -0.5f, 0);
         capsCollider.height /= 2;
@@ -229,10 +232,15 @@ public class PlayerMovement : MonoBehaviour
             float reduction = (1 - extraSpeedDecrease * slideSpeedDecrease * Time.deltaTime / rb.velocity.magnitude);
             extraVelocity *= reduction;
             inputVelocity *= reduction;
+            if (!IsGrounded())
+                player.PlayerSound.Pause();
+            else
+                player.PlayerSound.Resume();
             yield return null;
         }
         timer = 0;
         isSliding = false;
+        player.PlayerSound.StopSlide();
         while (timer < cameraSlideDropTime)
         {
             Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, Vector3.zero, timer / cameraSlideDropTime);
@@ -252,7 +260,7 @@ public class PlayerMovement : MonoBehaviour
         direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
         direction = direction.x * transform.right + direction.z * transform.forward;
         extraVelocity = direction * dashSpeed;
-
+        player.PlayerSound.PlayDash();
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
     }
