@@ -106,11 +106,11 @@ namespace Boss
 
                 float newAddY = attackSnowfall.zoneYScale * Time.deltaTime / 2f;
                 
-                Vector3 scale = snowFall.snowfall.transform.localScale;
+                Vector3 scale = snowFall.snowfall.transform.GetChild(0).localScale;
                 scale.y += attackSnowfall.zoneYScale * Time.deltaTime / attackSnowfall.zoneLoadTime;
-                snowFall.snowfall.transform.localScale = scale;
+                snowFall.snowfall.transform.GetChild(0).localScale = scale;
                 
-                snowFall.snowfall.transform.position -= Vector3.up * newAddY / 2f;
+                snowFall.snowfall.transform.GetChild(0).position -= Vector3.up * newAddY / 2f;
 
                 _snowFalls[i] = snowFall;
             }

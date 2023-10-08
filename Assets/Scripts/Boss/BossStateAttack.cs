@@ -19,7 +19,7 @@ namespace Boss
 
         public virtual void Casting()
         {
-            
+            _boss.BossAudio.PlaySound("attack");
         }
 
         public override void Update()
