@@ -22,14 +22,19 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        playerMovement.InputEnabled(false);
-        playerLook.InputEnabled(false);
+        StopPlayer();
     }
 
     public void StartPlayer()
     {
         playerMovement.InputEnabled(true);
         playerLook.InputEnabled(true);
+    }
+
+    public void StopPlayer()
+    {
+        playerMovement.InputEnabled(false);
+        playerLook.InputEnabled(false);
     }
 
     [ContextMenu("lose life")]

@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/MainMenu.unity
+    guid: 5ed5213a649c18446adaf9f6c0f34724
+  - enabled: 1
+    path: Assets/Scenes/Zeldruck.unity
+    guid: eb40a4d122f70254f806a1ebeb811080
   - enabled: 1
     path: Assets/Scenes/Defeat.unity
     guid: 7d3d5e40dbd881745b2fcf28ea83262c
@@ -17,12 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: f8bcf6437b391db429a94ca1d1296c36
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 5ed5213a649c18446adaf9f6c0f34724
-  - enabled: 1
-    path: Assets/Scenes/Zeldruck.unity
-    guid: eb40a4d122f70254f806a1ebeb811080
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 43d9949a605d2d140b24efde8a644e7a,
       type: 2}

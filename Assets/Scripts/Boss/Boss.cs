@@ -114,8 +114,6 @@ namespace Boss
             if (_currentHealth > 0f)
                 BossAudio.PlaySound("damage");
             
-            Debug.Log("Here");
-            
             _currentHealth -= damages;
 
             if (_currentHealth > 0f) return;
@@ -143,6 +141,8 @@ namespace Boss
             {
                 // Victory
                 Debug.Log("Victory");
+
+                GameManager.instance.GameWon();
                 
                 StateMachine.ChangeState(DieState);
                 return;
