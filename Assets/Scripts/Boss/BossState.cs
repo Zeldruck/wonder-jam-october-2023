@@ -23,13 +23,13 @@ namespace Boss
         {
             _startTime = Time.time;
             
-            if (!string.IsNullOrEmpty(_animBoolName))
+            if (!string.IsNullOrEmpty(_animBoolName) && _boss.Anim != null)
                 _boss.Anim.SetBool(_animBoolName, true);
         }
 
         public virtual void Exit()
         {
-            if (!string.IsNullOrEmpty(_animBoolName))
+            if (!string.IsNullOrEmpty(_animBoolName) && _boss.Anim != null)
                 _boss.Anim.SetBool(_animBoolName, false);
         }
 
