@@ -30,6 +30,7 @@ public class MiniGame3Dino : MiniGame
     public override void StartMiniGame()
     {
         score = 0;
+        scoreText.text = score.ToString();
     }
 
     public override void UpdateGameUI()
@@ -45,7 +46,7 @@ public class MiniGame3Dino : MiniGame
     public void IncrementScore()
     {
         score++;
-
+        scoreText.text = score.ToString();
         if(score == scoreToReach)
         {
             EndMiniGame(true);
