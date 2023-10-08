@@ -60,6 +60,8 @@ namespace Boss
                 snowBall.GetComponent<SnowfallCallbacks>().onPlayerHit += OnPlayerHit;
 
                 _snowBalls.Add(snowBall);
+                
+                DangerZonesManager.instance.AddDangerZone(DangerZonesManager.DangerZone.EShape.Circle, position, Vector3.zero, new Vector2(attackSnowball.zoneScale, attackSnowball.zoneScale), attackSnowball.duration / 2, attackSnowball.duration);
             }
         }
 
@@ -90,6 +92,7 @@ namespace Boss
         private void OnPlayerHit(Player player, GameObject snowfall)
         {
             Debug.Log("Player hit");
+            player.ReduceLife();
         }
     }
 }

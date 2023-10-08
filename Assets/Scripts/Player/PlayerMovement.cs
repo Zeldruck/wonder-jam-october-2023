@@ -41,20 +41,26 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 direction;
     private Vector3 inputVelocity;
     private Vector3 extraVelocity;
-    private int airJumpCount = 1;
+    private int airJumpCount = 0;
     private int jumpCount;
     private float jumpCooldownTimer;
     private Rigidbody rb;
     private CapsuleCollider capsCollider;
 
+    private bool hasInputEnabled;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         capsCollider = GetComponent<CapsuleCollider>();
+
+        hasInputEnabled = false;
     }
+    
     private void FixedUpdate()
     {
-
+        if (!hasInputEnabled) return;
+        
         if (!isDashing && !isSliding)
         {
             BuildHorizontalMovement();
@@ -77,6 +83,11 @@ public class PlayerMovement : MonoBehaviour
         if (slideCooldownTimer > 0)
             slideCooldownTimer -= Time.deltaTime;
         rb.velocity = inputVelocity + extraVelocity;
+    }
+
+    public void InputEnabled(bool enabled)
+    {
+        hasInputEnabled = enabled;
     }
 
     public void SetInputValue(Vector2 input)
@@ -106,12 +117,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void AttemptDash()
     {
+        if (!hasInputEnabled) return;
+        
         if (dashCooldownTimer <= 0 && movementInput.magnitude >= 0.2f && canDash)
             StartCoroutine(PerformDash());
     }
 
     public void AttemptSlide()
     {
+        if (!hasInputEnabled) return;
+        
         if (slideCooldownTimer <= 0 && movementInput.magnitude >= 0.2f && IsGrounded() && canSlide)
             StartCoroutine(PerformSlide());
     }
@@ -191,6 +206,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void PerformJump()
     {
+        if (!hasInputEnabled) return;
+        
         jumpCooldownTimer = jumpCooldownReset;
         inputVelocity.y = jumpForce;
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,22 @@ public class PlayerLook : MonoBehaviour
     private Vector2 cameraMovement;
     private Vector2 rotation;
     private bool isStick = false;
+
+    private bool hasInputEnabled;
+
+    private void Awake()
+    {
+        hasInputEnabled = false;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void InputEnabled(bool enabled)
+    {
+        hasInputEnabled = enabled;
+    }
+
     public void SetLookInput(Vector2 value)
     {
         lookInput = value;
@@ -28,6 +45,8 @@ public class PlayerLook : MonoBehaviour
 
     private void Update()
     {
+        if (!hasInputEnabled) return;
+        
         if (!isStick)
         {
             cameraMovement.x = lookInput.x * Time.deltaTime * mouseSensX;

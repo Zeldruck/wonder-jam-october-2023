@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,11 +8,24 @@ public class Player : MonoBehaviour
     private int currentLives;
     private PlayerMovement playerMovement;
     private PlayerLook playerLook;
+    
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerLook = GetComponentInChildren<PlayerLook>();
         currentLives = maxLives;
+    }
+
+    private void Start()
+    {
+        playerMovement.InputEnabled(false);
+        playerLook.InputEnabled(false);
+    }
+
+    public void StartPlayer()
+    {
+        playerMovement.InputEnabled(true);
+        playerLook.InputEnabled(true);
     }
 
     [ContextMenu("lose life")]

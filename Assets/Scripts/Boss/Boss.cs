@@ -81,14 +81,15 @@ namespace Boss
             }
         }
 
-        private void Start()
+        public void StartBoss()
         {
-            //StateMachine.Initialize(IdleState);
-            StateMachine.Initialize(ChooseAttackState);
+            StateMachine.Initialize(ReloadingState);
         }
 
         private void Update()
         {
+            if (StateMachine.CurrentState == null) return;
+            
             StateMachine.CurrentState.Update();
         }
 
@@ -102,14 +103,22 @@ namespace Boss
             _currentHealth = newHealth;
         }
 
+        [ContextMenu("lose life")]
+        public void ArtificialDamages()
+        {
+            ReceiveDamages(50);
+        }
+        
         public void ReceiveDamages(float damages)
         {
             if (_currentHealth > 0f)
                 BossAudio.PlaySound("damage");
             
+            Debug.Log("Here");
+            
             _currentHealth -= damages;
 
-            if (_currentHealth <= 0f) return;
+            if (_currentHealth > 0f) return;
 
             PhaseChange();
         }

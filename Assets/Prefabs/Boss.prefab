@@ -381,13 +381,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSourceInternalBoss: {fileID: 8247335927788142838}
   _audioSourceExternalBoss: {fileID: 3090436959507142227}
-  _audioClipAttack: {fileID: 8300000, guid: b8af62467696d174ab6a78768b8f3375, type: 3}
+  _audioClipAttack: {fileID: 0}
   _audioClipRefilling: {fileID: 8300000, guid: 091a16659187a474dab1c52ff33b1885, type: 3}
-  _audioClipRoar: {fileID: 8300000, guid: b771fcc926329ac40b52f5721eb2e6dd, type: 3}
-  _audioClipDie: {fileID: 8300000, guid: 83d4648fec8c71c499b6f774a2ddd765, type: 3}
-  _audioClipReceiveDamage: {fileID: 8300000, guid: 3a87e45c0375dc745b930e9431b4181c,
+  _audioClipRoar: {fileID: 8300000, guid: fc1c473bebeef1845a460bf99874e67c, type: 3}
+  _audioClipDie: {fileID: 8300000, guid: 2467dfd6dca0e5e4e92f4055a6173ae9, type: 3}
+  _audioClipReceiveDamage: {fileID: 8300000, guid: c199b5ab17271e74ebf1afa7125dec2b,
     type: 3}
-  _audioClipReceiveHeal: {fileID: 0}
+  _audioClipReceiveHeal: {fileID: 8300000, guid: 474b8680cbc8da34dbe0d4f5ebce142a,
+    type: 3}
 --- !u!136 &8219956224009132213
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -457,7 +458,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -499,7 +500,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -844,7 +845,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -886,7 +887,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

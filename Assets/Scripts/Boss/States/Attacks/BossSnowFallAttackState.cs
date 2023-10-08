@@ -40,7 +40,7 @@ namespace Boss
             hasLoaded = false;
             durationTimer = attackSnowfall.duration;
             _snowFalls = new List<SnowFall>();
-            
+
             Casting();
         }
         
@@ -77,6 +77,8 @@ namespace Boss
                 snowFall.GetComponent<SnowfallCallbacks>().onPlayerHit += OnPlayerHit;
 
                 _snowFalls.Add(new SnowFall(snowFall, attackSnowfall.zoneLoadTime));
+                
+                DangerZonesManager.instance.AddDangerZone(DangerZonesManager.DangerZone.EShape.Circle, position, Vector3.zero, new Vector2(attackSnowfall.zoneScale, attackSnowfall.zoneScale), attackSnowfall.zoneLoadTime / 2, attackSnowfall.duration);
             }
         }
 
@@ -119,6 +121,7 @@ namespace Boss
         private void OnPlayerHit(Player player, GameObject snowfall)
         {
             Debug.Log("Player hit");
+            player.ReduceLife();
         }
     }
 }
