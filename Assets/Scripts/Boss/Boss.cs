@@ -19,6 +19,11 @@ namespace Boss
         [SerializeField] private BossData _bossData;
         public BossData BossData => _bossData;
 
+        [SerializeField] private Player _player;
+        public Player PlayerP => _player;
+
+        [SerializeField] private GameObject _bossHead;
+
         #region States
  
         public BossIdleState IdleState { get; private set; }
@@ -56,15 +61,15 @@ namespace Boss
                     switch (_bossData._bossPhases[i].phaseAttacks[j].phaseAttack)
                     {
                         case SO_Attack_Snowfall snowfall:
-                            stateAttacks.Add(new BossSnowFallAttackState(this, StateMachine, snowfall, snowfall.animation));
+                            stateAttacks.Add(new BossSnowFallAttackState(this, StateMachine, snowfall, _bossHead, snowfall.animation));
                             break;
                         
                         case SO_Attack_Snowball snowball:
-                            stateAttacks.Add(new BossSnowballAttackState(this, StateMachine, snowball, snowball.animation));
+                            stateAttacks.Add(new BossSnowballAttackState(this, StateMachine, snowball, _bossHead, snowball.animation));
                             break;
                         
                         case So_Attack_Snowball_Async snowballAsync:
-                            stateAttacks.Add(new BossSnowballAsyncAttackState(this, StateMachine, snowballAsync, snowballAsync.animation));
+                            stateAttacks.Add(new BossSnowballAsyncAttackState(this, StateMachine, snowballAsync, _bossHead, snowballAsync.animation));
                             break;
                     }
                 }
@@ -102,6 +107,15 @@ namespace Boss
             if (_currentHealth <= 0f) return;
 
             PhaseChange();
+        }
+
+        public void ReceiveHeal(float heal)
+        {
+            _currentHealth += heal;
+            
+            if (_currentHealth < _bossData._bossPhases[_currentPhase].phaseHealth) return;
+
+            _currentHealth = _bossData._bossPhases[_currentPhase].phaseHealth;
         }
 
         private void PhaseChange()

@@ -18,6 +18,7 @@ namespace Boss
         public float phaseHealth;
         public BossAttackProbability[] phaseAttacks;
         public float refillingTime;
+        public float waitAfterAttack;
     }
 
     [Serializable]

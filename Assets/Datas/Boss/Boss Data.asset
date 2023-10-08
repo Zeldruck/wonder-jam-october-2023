@@ -23,3 +23,34 @@ MonoBehaviour:
     - phaseAttack: {fileID: 11400000, guid: eac3b220674a7554fb87823f6e92e46b, type: 2}
       probability: 1
     refillingTime: 0
+    waitAfterAttack: 3
+  - phaseHealth: 150
+    phaseAttacks:
+    - phaseAttack: {fileID: 11400000, guid: 49ea981906cd3994c885af43f52fb320, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: b2be0b5a1c070584d920090087bcd89c, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: eac3b220674a7554fb87823f6e92e46b, type: 2}
+      probability: 1
+    refillingTime: 10
+    waitAfterAttack: 2.5
+  - phaseHealth: 200
+    phaseAttacks:
+    - phaseAttack: {fileID: 11400000, guid: 49ea981906cd3994c885af43f52fb320, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: b2be0b5a1c070584d920090087bcd89c, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: eac3b220674a7554fb87823f6e92e46b, type: 2}
+      probability: 1
+    refillingTime: 8
+    waitAfterAttack: 2
+  - phaseHealth: 250
+    phaseAttacks:
+    - phaseAttack: {fileID: 11400000, guid: 49ea981906cd3994c885af43f52fb320, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: b2be0b5a1c070584d920090087bcd89c, type: 2}
+      probability: 1
+    - phaseAttack: {fileID: 11400000, guid: eac3b220674a7554fb87823f6e92e46b, type: 2}
+      probability: 1
+    refillingTime: 5
+    waitAfterAttack: 2
