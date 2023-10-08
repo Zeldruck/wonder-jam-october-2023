@@ -357,8 +357,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0511cf42e01664e88e28a03549b477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playSceneName: Victory
+  playSceneName: Zeldruck
   creditsSceneName: Credits
+  returnSceneName: 
 --- !u!114 &159418970
 MonoBehaviour:
   m_ObjectHideFlags: 0
