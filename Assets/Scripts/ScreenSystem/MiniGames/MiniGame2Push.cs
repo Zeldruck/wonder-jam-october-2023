@@ -125,6 +125,8 @@ public class MiniGame2Push : MiniGame
                 keyboardS.gameObject.SetActive(false);
                 break;
         }
+
+        gameUI.gameObject.SetActive(true);
     }
 
     public override void UpdateGameUI()
