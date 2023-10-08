@@ -262,7 +262,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Heal
+  m_text: Soin
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84cf768b5e5716241b1b8a54663f6b72, type: 2}
   m_sharedMaterial: {fileID: 1942921036511750560, guid: 84cf768b5e5716241b1b8a54663f6b72,
@@ -545,7 +545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &30020012300499159
 RectTransform:
   m_ObjectHideFlags: 0
@@ -824,7 +824,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Attack
+  m_text: Attaque
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84cf768b5e5716241b1b8a54663f6b72, type: 2}
   m_sharedMaterial: {fileID: 1942921036511750560, guid: 84cf768b5e5716241b1b8a54663f6b72,
@@ -1134,6 +1134,7 @@ GameObject:
   - component: {fileID: 427292703501251162}
   - component: {fileID: 8899884815176611678}
   - component: {fileID: 254084453520006782}
+  - component: {fileID: 5138597194520331072}
   m_Layer: 5
   m_Name: Canvas_ScreenSystem
   m_TagString: Untagged
@@ -1237,6 +1238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e8268bc67800e47ade7a10b56d7f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  boss: {fileID: 0}
   panelScreen: {fileID: 2522126429647971432}
   panelGame: {fileID: 5216126084530848289}
   panelChoices: {fileID: 168989229648958327}
@@ -1249,10 +1252,132 @@ MonoBehaviour:
   miniGameSystem: {fileID: 0}
   isMiniGameRunning: 0
   isMiniGameFinished: 0
-  isMiniGameWon: 0
-  isMiniGameLost: 0
-  isMiniGamePaused: 0
   isPowerUpsLock: 1
+  isDisplay: 0
+  miniGameType: 0
+--- !u!114 &5138597194520331072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691628247973053860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: fcb80449b96b0bf4aa8b0adfaba3b535,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2534f37d-06c7-442c-aa91-77b96f1f7e0a
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5c1af817-3497-47fb-b516-5c8c81beddef
+    m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6773b5dc-f985-45fe-afd1-73e7aad89ff4
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ac063c2a-349b-4f74-98ad-0feb057c0023
+    m_ActionName: Player/Dash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 514f0619-6261-4754-9d88-7931eb404d04
+    m_ActionName: Player/Slide[/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 254084453520006782}
+        m_TargetAssemblyTypeName: ScreenSystem, Assembly-CSharp
+        m_MethodName: OnNavigate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5bd4354a-9490-4357-b58a-c60beaa3869c
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a458fc45-b194-44ce-a59c-106651d71f87
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 27e82f84-62d1-4bf8-9ec1-39557043f304
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 639727f7-998f-47cc-b9a0-0d328d608ad1
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cbb34e27-9b04-4a9e-9e3b-e625131de73c
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 94574979-676a-4a90-b316-173c24818030
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 478afa3b-4b4d-4300-99e6-bbfd01ca54c0
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b0654137-b6aa-4485-9e4e-30ffdfcc9a46
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c46aeb35-24e2-49b1-8056-52bda892deb4
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f0c9554-2454-4cf9-bc77-6a9eb52263e1
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9559a19b-8421-4f86-ad08-8c558ccafb12
+    m_ActionName: Minigame/ActionNorth[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9ac89ae5-918f-4681-bda2-6df3b88d87e4
+    m_ActionName: Minigame/ActionSouth[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 588c1b8d-47d0-40cc-b298-a33a1d86f49e
+    m_ActionName: Minigame/ActionEast[/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b90dc0a4-1db3-45fe-9ebc-2680758633ba
+    m_ActionName: Minigame/ActionWest[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9838869b-cdd9-497d-883e-06eb63d247d1
+    m_ActionName: Player/ShowPanel[/Keyboard/space]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: UI
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &8727134509763811023
 GameObject:
   m_ObjectHideFlags: 0

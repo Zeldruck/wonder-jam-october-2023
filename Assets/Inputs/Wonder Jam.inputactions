@@ -809,7 +809,7 @@
                     "id": "9559a19b-8421-4f86-ad08-8c558ccafb12",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -818,7 +818,7 @@
                     "id": "9ac89ae5-918f-4681-bda2-6df3b88d87e4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -827,7 +827,7 @@
                     "id": "588c1b8d-47d0-40cc-b298-a33a1d86f49e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -836,7 +836,7 @@
                     "id": "b90dc0a4-1db3-45fe-9ebc-2680758633ba",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -847,7 +847,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Keyboard&Mouse",
                     "action": "ActionNorth",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -858,7 +858,7 @@
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Gamepad",
                     "action": "ActionNorth",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -869,7 +869,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Keyboard&Mouse",
                     "action": "ActionWest",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -880,7 +880,7 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Gamepad",
                     "action": "ActionWest",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -891,7 +891,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Keyboard&Mouse",
                     "action": "ActionSouth",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -902,7 +902,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Gamepad",
                     "action": "ActionSouth",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -913,7 +913,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Keyboard&Mouse",
                     "action": "ActionEast",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -924,7 +924,7 @@
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamepadKeyboardMouse",
+                    "groups": "GamepadKeyboardMouse;Gamepad",
                     "action": "ActionEast",
                     "isComposite": false,
                     "isPartOfComposite": false
