@@ -46,11 +46,13 @@ public class PlayerMovement : MonoBehaviour
     private float jumpCooldownTimer;
     private Rigidbody rb;
     private CapsuleCollider capsCollider;
+    private Player player;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         capsCollider = GetComponent<CapsuleCollider>();
+        player = GetComponent<Player>();
     }
     private void FixedUpdate()
     {
@@ -68,7 +70,13 @@ public class PlayerMovement : MonoBehaviour
                     extraVelocity *= reduction;
                 }
                 else extraVelocity = Vector3.zero;
+                if (rb.velocity.magnitude > 0.2f)
+                    player.PlayerSound.PlayFootsteps();
+                else
+                    player.PlayerSound.StopFootsteps();
             }
+            else
+                player.PlayerSound.StopFootsteps();
         }
         if (jumpCooldownTimer > 0)
             jumpCooldownTimer -= Time.deltaTime;
@@ -193,6 +201,7 @@ public class PlayerMovement : MonoBehaviour
     {
         jumpCooldownTimer = jumpCooldownReset;
         inputVelocity.y = jumpForce;
+        player.PlayerSound.PlayJump();
     }
 
     private IEnumerator PerformSlide()
