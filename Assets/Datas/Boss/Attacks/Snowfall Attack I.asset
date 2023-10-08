@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30adb4c8ca4117f448bad984f2efd5c4, type: 3}
   m_Name: Snowfall Attack I
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3369203324723966276, guid: b67a5a4fc8f7dd44d9183a9fb3e49e18, type: 3}
+  prefab: {fileID: 5609969369665210084, guid: fd2afe267edec02478f498a49420d53d, type: 3}
   damage: 1
   cooldown: 5
   waitAfterAttack: 5
