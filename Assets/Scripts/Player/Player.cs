@@ -6,11 +6,16 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxLives = 3;
     private int currentLives;
     private PlayerMovement playerMovement;
+    private PlayerSound playerSound;
     private PlayerLook playerLook;
+
+    public PlayerSound PlayerSound { get => playerSound; private set => playerSound = value; }
+
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerLook = GetComponentInChildren<PlayerLook>();
+        playerSound = GetComponent<PlayerSound>();
         currentLives = maxLives;
     }
 
