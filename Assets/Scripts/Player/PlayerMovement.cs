@@ -13,23 +13,29 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float jumpCooldownReset = 0.2f;
+    [SerializeField] private float gravityForce;
+    [Header("Groundcheck")]
     [SerializeField] private Vector3 groundCheckPosition = new Vector3(0, -0.55f, 0);
     [SerializeField] private float groundCheckRadius = 0.48f;
-    [SerializeField] private float gravityForce;
+    [SerializeField] private LayerMask groundMask;
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;
     [SerializeField] private float dashTime = 0.2f;
     [SerializeField] private float dashCooldown = 0.9f;
     [Header("Slide")]
     [SerializeField] private float slideInitialSpeedIncreaseMod = 1f;
-    //TODO: timer for speed increase? to limit player from spamming sliding just for the speed
+    [SerializeField] private float slideCooldown = 1f;
     [SerializeField] private float slideSpeedDecrease = 0.1f;
-    [SerializeField] private float slideRotation = 90f;
     [SerializeField] private float slideMinSpeed = 1f;
+    [SerializeField] private float cameraSlideDropTime = 0.4f;
+    [SerializeField] private Vector3 cameraSlideOffset = new Vector3(0, -0.5f, 0);
+    private bool canSlide;
+    private bool canDash;
     private bool isSliding;
     private bool slideInput;
     private bool isDashing;
     private float dashCooldownTimer;
+    private float slideCooldownTimer;
     private Vector2 movementInput;
     private bool jumpInput;
     private Vector3 direction;
@@ -39,14 +45,15 @@ public class PlayerMovement : MonoBehaviour
     private int jumpCount;
     private float jumpCooldownTimer;
     private Rigidbody rb;
+    private CapsuleCollider capsCollider;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        capsCollider = GetComponent<CapsuleCollider>();
     }
     private void FixedUpdate()
     {
-        inputVelocity = rb.velocity;
 
         if (!isDashing && !isSliding)
         {
@@ -67,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
             jumpCooldownTimer -= Time.deltaTime;
         if (dashCooldownTimer > 0)
             dashCooldownTimer -= Time.deltaTime;
+        if (slideCooldownTimer > 0)
+            slideCooldownTimer -= Time.deltaTime;
         rb.velocity = inputVelocity + extraVelocity;
     }
 
@@ -85,15 +94,25 @@ public class PlayerMovement : MonoBehaviour
         airJumpCount = value;
     }
 
+    public void SetCanSlide(bool value)
+    {
+        canSlide = value;
+    }
+
+    public void SetCanDash(bool value)
+    {
+        canDash = value;
+    }
+
     public void AttemptDash()
     {
-        if (dashCooldownTimer <= 0 && movementInput.magnitude >= 0.2f)
+        if (dashCooldownTimer <= 0 && movementInput.magnitude >= 0.2f && canDash)
             StartCoroutine(PerformDash());
     }
 
     public void AttemptSlide()
     {
-        if (movementInput.magnitude >= 0.2f && IsGrounded())
+        if (slideCooldownTimer <= 0 && movementInput.magnitude >= 0.2f && IsGrounded() && canSlide)
             StartCoroutine(PerformSlide());
     }
 
@@ -136,9 +155,11 @@ public class PlayerMovement : MonoBehaviour
                 jumpCount--;
             }
         }
-
-        if (IsGrounded())
+        else if (IsGrounded())
+        {
+            inputVelocity.y = 0;
             jumpCount = airJumpCount;
+        }
         else
             inputVelocity.y -= gravityForce * Time.fixedDeltaTime;
 
@@ -156,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         Collider[] hits;
-        hits = Physics.OverlapSphere(groundCheckPosition + transform.position, groundCheckRadius);
+        hits = Physics.OverlapSphere(groundCheckPosition + transform.position, groundCheckRadius, groundMask);
         foreach (Collider hit in hits)
         {
             if (hit.gameObject != gameObject)
@@ -177,32 +198,41 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator PerformSlide()
     {
         isSliding = true;
-        Vector3 currentRotation = transform.rotation.eulerAngles;
-        Quaternion rotation = Quaternion.Euler(-slideRotation, currentRotation.y, currentRotation.z);
-        transform.rotation = rotation;
-
+        slideCooldownTimer = slideCooldown;
+        capsCollider.center = new Vector3(0, -0.5f, 0);
+        capsCollider.height /= 2;
         direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
-        Vector3 moveDirection = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized;
-
-        float tempSpeed = slideInitialSpeedIncreaseMod * speed;
-        Vector3 newVelocity = Vector3.zero;
-        newVelocity.x = moveDirection.x * tempSpeed;
-        newVelocity.z = moveDirection.z * tempSpeed;
-        rb.velocity = newVelocity;
-        while (slideInput && rb.velocity.magnitude > slideMinSpeed)
+        direction = direction.x * transform.right + direction.z * transform.forward;
+        Vector3 desiredVelocity = direction * slideInitialSpeedIncreaseMod * speed;
+        float timer = 0;
+        while (timer < cameraSlideDropTime)
         {
-            tempSpeed -= slideSpeedDecrease * Time.deltaTime;
-            newVelocity = rb.velocity;
-            newVelocity.x = moveDirection.x * tempSpeed;
-            newVelocity.z = moveDirection.z * tempSpeed;
-            rb.velocity = newVelocity;
+            Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, cameraSlideOffset, timer / cameraSlideDropTime);
+            extraVelocity = Vector3.Lerp(extraVelocity, desiredVelocity, timer / cameraSlideDropTime);
+            timer += Time.deltaTime;
             yield return null;
         }
-        currentRotation = transform.rotation.eulerAngles;
-        rotation = Quaternion.Euler(0, currentRotation.y, currentRotation.z);
-        transform.rotation = rotation;
+        Camera.main.transform.localPosition = cameraSlideOffset;
+        extraVelocity = direction * slideInitialSpeedIncreaseMod * speed;
+
+        while (slideInput && rb.velocity.magnitude > slideMinSpeed)
+        {
+            float reduction = (1 - extraSpeedDecrease * slideSpeedDecrease * Time.deltaTime / rb.velocity.magnitude);
+            extraVelocity *= reduction;
+            inputVelocity *= reduction;
+            yield return null;
+        }
+        timer = 0;
         isSliding = false;
+        while (timer < cameraSlideDropTime)
+        {
+            Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, Vector3.zero, timer / cameraSlideDropTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Camera.main.transform.localPosition = Vector3.zero;
+        capsCollider.center = Vector3.zero;
+        capsCollider.height *= 2;
     }
 
     private IEnumerator PerformDash()
